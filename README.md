@@ -1,73 +1,120 @@
-# Welcome to your Lovable project
+# ThinkBotz Web
 
-## Project info
+Welcome to the official website for **ThinkBotz** — the student association of the AIML Department at AITK, Kadapa.
 
-**URL**: https://lovable.dev/projects/72d51def-d13a-4b17-b2c3-3be88b8af43c
+This project is a modern, responsive web application built with **React**, **TypeScript**, and **Tailwind CSS**. It provides information about the association, showcases events, displays a dynamic gallery, and offers easy ways to contact the team.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## 🚀 Features
 
-**Use Lovable**
+- **Home Page:**  
+  Overview of the association, top upcoming events, and quick navigation.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/72d51def-d13a-4b17-b2c3-3be88b8af43c) and start prompting.
+- **About Page:**  
+  Mission, vision, and a responsive, hierarchical display of the team (HOD, President, Treasurer, Technical, Coordinators).
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Events Page:**  
+  List and detail view of all events, with filtering for upcoming, completed, and featured events.
 
-**Use your preferred IDE**
+- **Gallery Page:**  
+  Dynamic, section-based gallery grouped by event, supporting multiple images per event.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **Contact Page:**  
+  Contact form (sends to thinkbotz@gmail.com via user's email client), technical team contact, and all core contact info.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- **Responsive Design:**  
+  Fully mobile-friendly and accessible.
 
-Follow these steps:
+- **Modern UI:**  
+  Built with Tailwind CSS and Lucide icons for a clean, modern look.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+---
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 📁 Project Structure
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+src/
+  components/
+    layout/         # Layout components (Footer, Header, etc.)
+    sections/       # Section components (e.g., eventsSection)
+    ui/             # UI primitives (Button, Card, etc.)
+  pages/
+    About.tsx       # About page
+    Contact.tsx     # Contact page
+    Events.tsx      # Events listing page
+    EventDetail.tsx # Event detail page
+    Gallery.tsx     # Gallery page
+  App.tsx           # Main app entry
+  index.tsx         # React entry point
+  index.css         # Tailwind CSS
 ```
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🛠️ Getting Started
 
-**Use GitHub Codespaces**
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/your-org/thinkbotz.git
+   cd thinkbotz
+   ```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+2. **Install dependencies:**
+   ```bash
+   npm install
+   # or
+   yarn
+   ```
 
-## What technologies are used for this project?
+3. **Start the development server:**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
 
-This project is built with:
+4. **Open in your browser:**
+   ```
+   http://localhost:8000
+   ```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
+## 📝 Customization
 
-Simply open [Lovable](https://lovable.dev/projects/72d51def-d13a-4b17-b2c3-3be88b8af43c) and click on Share -> Publish.
+- **Team & Hierarchy:**  
+  Update `src/pages/About.tsx` to change team members or hierarchy.
 
-## Can I connect a custom domain to my Lovable project?
+- **Events:**  
+  Add or edit events in `src/pages/EventDetail.tsx` and `src/pages/Events.tsx`.
 
-Yes, you can!
+- **Gallery:**  
+  Add new event sections and images in `src/pages/Gallery.tsx`.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- **Contact Info:**  
+  Update contact details in `src/pages/Contact.tsx`.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+---
+
+## 👨‍💻 Technical Stack
+
+- [React](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [React Router](https://reactrouter.com/)
+- [Lucide Icons](https://lucide.dev/)
+
+---
+
+## ✨ Credits
+
+Website created by [Syed Rayan](https://isyedrayan.online)  
+Technical Team – ThinkBotz
+
+---
+
+## 📄 License
+
+This project is for educational and organizational use by ThinkBotz.  
+For other uses, please contact
