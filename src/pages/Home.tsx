@@ -40,19 +40,19 @@ export default function Home() {
 
 
       {/* Call to Action */}
-      <section className="py-16 bg-gradient-to-r from-brand-purple to-brand-brinjal">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+      <section className="py-20  flex justify-center items-center">
+        <div className="w-full max-w-xl mx-auto bg-white/90 rounded-3xl  px-8 py-12 flex flex-col items-center gap-6 border border-brand-lavender">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-brand-brinjal text-center">
             Ready to Join Our Community?
           </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-brand-brinjal/80 text-center max-w-lg">
             Become part of something bigger. Connect, learn, grow, and make lasting memories with CDSA.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-white text-brand-brinjal hover:bg-white/90 rounded-2xl">
+          <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
+            <Button asChild size="lg" className="bg-gradient-to-r from-brand-purple to-brand-brinjal text-white font-bold rounded-2xl w-full sm:w-auto shadow-md hover:opacity-90">
               <Link to="/events">Join Our Events</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="bg-white text-brand-brinjal hover:bg-white/90 rounded-2xl">
+            <Button asChild size="lg" variant="outline" className="border-brand-brinjal text-brand-brinjal font-bold rounded-2xl w-full sm:w-auto shadow-md hover:bg-brand-lavender/20">
               <Link to="/contact">Get In Touch</Link>
             </Button>
           </div>

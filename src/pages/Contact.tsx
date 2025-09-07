@@ -4,71 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Phone, MapPin, Clock, Send, User, GraduationCap } from "lucide-react";
-
-const facultyContacts = [
-  {
-    name: "Dr. Sarah Johnson",
-    role: "Head of Department",
-    email: "sarah.johnson@college.edu",
-    phone: "+1 (555) 123-4567",
-    department: "Computer Science",
-    officeHours: "Mon-Fri, 2PM-4PM"
-  },
-  {
-    name: "Prof. Michael Brown",
-    role: "Associate Professor",
-    email: "michael.brown@college.edu",
-    phone: "+1 (555) 234-5678",
-    department: "Software Engineering",
-    officeHours: "Tue-Thu, 10AM-12PM"
-  },
-  {
-    name: "Dr. Emily Chen",
-    role: "Assistant Professor",
-    email: "emily.chen@college.edu",
-    phone: "+1 (555) 345-6789",
-    department: "Data Science",
-    officeHours: "Mon-Wed-Fri, 1PM-3PM"
-  }
-];
-
-const coreTeamContacts = [
-  {
-    name: "Alex Martinez",
-    role: "President",
-    email: "alex.martinez@student.college.edu",
-    phone: "+1 (555) 456-7890",
-    year: "4th Year",
-    availability: "Available daily"
-  },
-  {
-    name: "Jessica Davis",
-    role: "Events Coordinator",
-    email: "jessica.davis@student.college.edu",
-    phone: "+1 (555) 567-8901",
-    year: "3rd Year",
-    availability: "Mon-Fri evenings"
-  },
-  {
-    name: "David Wilson",
-    role: "Technical Lead",
-    email: "david.wilson@student.college.edu",
-    phone: "+1 (555) 678-9012",
-    year: "4th Year",
-    availability: "Weekends"
-  },
-  {
-    name: "Lisa Thompson",
-    role: "Cultural Coordinator",
-    email: "lisa.thompson@student.college.edu",
-    phone: "+1 (555) 789-0123",
-    year: "3rd Year",
-    availability: "Tue-Thu afternoons"
-  }
-];
+import { Mail, Phone, MapPin, Clock, Send, User } from "lucide-react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -92,12 +29,15 @@ export default function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // Open user's email client to send to thinkbotz@gmail.com
+    const mailto = `mailto:thinkbotz@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
+    )}`;
+    window.location.href = mailto;
 
     toast({
-      title: "Message sent successfully!",
-      description: "We'll get back to you within 24 hours.",
+      title: "Message window opened!",
+      description: "Please complete sending your email to thinkbotz@gmail.com.",
     });
 
     setFormData({
@@ -132,7 +72,7 @@ export default function Contact() {
                   <span>Send us a Message</span>
                 </CardTitle>
                 <CardDescription>
-                  Fill out the form below and we'll respond within 24 hours
+                  Fill out the form below and your message will be sent to <span className="font-semibold">thinkbotz@gmail.com</span>
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -162,7 +102,6 @@ export default function Contact() {
                       />
                     </div>
                   </div>
-                  
                   <div className="space-y-2">
                     <Label htmlFor="subject">Subject</Label>
                     <Input
@@ -174,7 +113,6 @@ export default function Contact() {
                       required
                     />
                   </div>
-                  
                   <div className="space-y-2">
                     <Label htmlFor="message">Message</Label>
                     <Textarea
@@ -187,7 +125,6 @@ export default function Contact() {
                       required
                     />
                   </div>
-                  
                   <Button
                     type="submit"
                     disabled={isSubmitting}
@@ -225,25 +162,22 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="font-medium">Email</p>
-                    <p className="text-sm text-muted-foreground">info@cdsa.college.edu</p>
+                    <a
+                  href="mailto:isyedrayan.online@gmail.com"
+                  className="text-sm text-brand-brinjal underline"
+                >
+                  thinkbotz@gmail.com
+                </a>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-brand-lavender rounded-lg flex items-center justify-center">
-                    <Phone className="w-5 h-5 text-brand-brinjal" />
-                  </div>
-                  <div>
-                    <p className="font-medium">Phone</p>
-                    <p className="text-sm text-muted-foreground">+1 (555) 123-CDSA</p>
-                  </div>
-                </div>
+                
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-brand-lavender rounded-lg flex items-center justify-center">
                     <MapPin className="w-5 h-5 text-brand-brinjal" />
                   </div>
                   <div>
-                    <p className="font-medium">Office Location</p>
-                    <p className="text-sm text-muted-foreground">Room 301, Department Building</p>
+                    <p className="font-medium">Visit Us</p>
+                    <p className="text-sm text-muted-foreground">AIML dept , AITK - kadapa</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
@@ -251,84 +185,28 @@ export default function Contact() {
                     <Clock className="w-5 h-5 text-brand-brinjal" />
                   </div>
                   <div>
-                    <p className="font-medium">Office Hours</p>
-                    <p className="text-sm text-muted-foreground">Monday-Friday, 9AM-5PM</p>
+                    <p className="font-medium">Active Hours</p>
+                    <p className="text-sm text-muted-foreground">Monday-Saturday, 9AM-4PM</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
-
-            {/* Faculty Contacts */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-xl flex items-center space-x-2">
-                  <GraduationCap className="w-5 h-5" />
-                  <span>Faculty Contacts</span>
-                </CardTitle>
-                <CardDescription>Reach out to our faculty members</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {facultyContacts.map((faculty, index) => (
-                  <div key={index} className="p-4 bg-brand-lavender/30 rounded-lg space-y-2">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-semibold">{faculty.name}</h4>
-                      <Badge variant="secondary">{faculty.department}</Badge>
-                    </div>
-                    <p className="text-sm text-brand-brinjal font-medium">{faculty.role}</p>
-                    <div className="grid grid-cols-1 gap-1 text-sm text-muted-foreground">
-                      <div className="flex items-center space-x-2">
-                        <Mail className="w-3 h-3" />
-                        <span>{faculty.email}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Phone className="w-3 h-3" />
-                        <span>{faculty.phone}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Clock className="w-3 h-3" />
-                        <span>{faculty.officeHours}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            {/* Core Team Contacts */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-xl flex items-center space-x-2">
-                  <User className="w-5 h-5" />
-                  <span>Core Team</span>
-                </CardTitle>
-                <CardDescription>Connect with our student leaders</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {coreTeamContacts.map((member, index) => (
-                  <div key={index} className="p-4 bg-white border rounded-lg space-y-2">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-semibold">{member.name}</h4>
-                      <Badge className="bg-brand-purple text-white">{member.year}</Badge>
-                    </div>
-                    <p className="text-sm text-brand-brinjal font-medium">{member.role}</p>
-                    <div className="grid grid-cols-1 gap-1 text-sm text-muted-foreground">
-                      <div className="flex items-center space-x-2">
-                        <Mail className="w-3 h-3" />
-                        <span>{member.email}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Phone className="w-3 h-3" />
-                        <span>{member.phone}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Clock className="w-3 h-3" />
-                        <span>{member.availability}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
+            {/* Technical Team Contact */}
+            <div className="rounded-xl bg-brand-lavender/60 p-5 flex items-center gap-4">
+              <div className="w-12 h-12 bg-brand-lavender rounded-lg flex items-center justify-center">
+                <User className="w-6 h-6 text-brand-brinjal" />
+              </div>
+              <div>
+                <div className="font-semibold text-brand-brinjal">Technical Team Contact</div>
+                <div className="text-sm text-muted-foreground">Syed Rayan</div>
+                <a
+                  href="mailto:isyedrayan.online@gmail.com"
+                  className="text-sm text-brand-brinjal underline"
+                >
+                  mesyedrn@gmail.com
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

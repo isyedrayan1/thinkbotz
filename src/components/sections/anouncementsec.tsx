@@ -5,103 +5,61 @@ import { Bell } from "lucide-react";
 const announcements = [
 	{
 		id: 1,
-		title: "Annual Tech Fest 2024",
+		title: "Association Inauguration",
 		description:
 			"Join us for the biggest tech event of the year with coding competitions, workshops, and prizes worth ₹50,000+",
-		date: "March 15, 2024",
+		date: "Sept 4, 2025",
 		isNew: true,
 	},
 	{
 		id: 2,
-		title: "Student Council Elections",
+		title: "Upcoming Events",
 		description:
-			"Nominations are now open for the upcoming student council elections. Be the change you want to see!",
-		date: "March 10, 2024",
+			"There are many exciting events lined up for this semester. Stay tuned for more details! and check events page and register",
+		date: "",
 		isNew: true,
 	},
-	{
-		id: 3,
-		title: "Workshop: Web Development Bootcamp",
-		description:
-			"Free 3-day intensive workshop on modern web development. Limited seats available.",
-		date: "March 8, 2024",
-		isNew: false,
-	},
+	// Add more cards to test the animation!
 ];
 
 export default function AnnouncementSec() {
-	const [index, setIndex] = useState(0);
-	const intervalRef = useRef<NodeJS.Timeout | null>(null);
-	const [isMobile, setIsMobile] = useState(false);
+	const containerRef = useRef<HTMLDivElement>(null);
+	const [cardsPerView, setCardsPerView] = useState(3);
+	const [shouldScroll, setShouldScroll] = useState(false);
+	const [cardWidth, setCardWidth] = useState(320);
 
-	// Responsive: update on resize
+	// Responsive: determine cards per view and card width
 	useEffect(() => {
-		const checkMobile = () => setIsMobile(window.innerWidth < 768);
-		checkMobile();
-		window.addEventListener("resize", checkMobile);
-		return () => window.removeEventListener("resize", checkMobile);
+		const handleResize = () => {
+			const width = window.innerWidth;
+			if (width < 640) {
+				setCardsPerView(1);
+				setCardWidth(280);
+			} else if (width < 1024) {
+				setCardsPerView(2);
+				setCardWidth(300);
+			} else {
+				setCardsPerView(3);
+				setCardWidth(320);
+			}
+		};
+		handleResize();
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
 	}, []);
 
-	const total = announcements.length;
-	const visibleCount = isMobile ? 1 : Math.min(3, total);
-
-	// For infinite scroll: duplicate the array if needed
-	const carouselItems =
-		total > visibleCount ? [...announcements, ...announcements] : announcements;
-
-	// Animation logic: always scroll forward, reset to 0 for seamless loop
+	// Check if we need to scroll (more cards than fit)
 	useEffect(() => {
-		if (total <= visibleCount) return;
-		intervalRef.current = setInterval(() => {
-			setIndex((prev) => {
-				if (prev + 1 > carouselItems.length - visibleCount) {
-					return 0;
-				}
-				return prev + 1;
-			});
-		}, 3500);
+		setShouldScroll(announcements.length > cardsPerView);
+	}, [cardsPerView]);
 
-		return () => {
-			if (intervalRef.current) clearInterval(intervalRef.current);
-		};
-	}, [total, visibleCount, carouselItems.length]);
+	// Animation duration: longer for more cards
+	const duration = announcements.length * 4; // seconds
 
-	// Calculate translateX for the carousel
-	// For 3 cards, stretch them to fill the container responsively
-	// For more, use fixed width for smooth scroll
-	let cardStyle: React.CSSProperties = {};
-	let containerStyle: React.CSSProperties = {};
-	let translateX = "0px";
-
-	if (total > visibleCount) {
-		// Carousel mode (fixed width)
-		const cardWidth = isMobile ? 320 : 340;
-		const gap = isMobile ? 12 : 24;
-		containerStyle = {
-			width: `${carouselItems.length * (cardWidth + gap)}px`,
-			transform: `translateX(-${index * (cardWidth + gap)}px)`,
-			gap: `${gap}px`,
-			pointerEvents: "none",
-			transition: "transform 0.7s cubic-bezier(0.4,0,0.2,1)",
-		};
-		cardStyle = {
-			width: `${cardWidth}px`,
-			maxWidth: "100%",
-			flex: "0 0 auto",
-		};
-	} else {
-		// Stretch mode (responsive)
-		containerStyle = {
-			width: "100%",
-			gap: isMobile ? "12px" : "24px",
-			pointerEvents: "none",
-		};
-		cardStyle = {
-			flex: "1 1 0%",
-			minWidth: 0,
-			maxWidth: "100%",
-		};
-	}
+	// Duplicate cards for seamless infinite scroll
+	const cardsToShow = shouldScroll
+		? [...announcements, ...announcements]
+		: announcements;
 
 	return (
 		<section className="py-16 bg-background">
@@ -114,16 +72,31 @@ export default function AnnouncementSec() {
 						Stay updated with the latest news and important updates
 					</p>
 				</div>
-				<div className="relative w-full overflow-hidden">
+				<div
+					className="relative w-full overflow-hidden"
+					tabIndex={0}
+					aria-label="Announcements carousel"
+				>
 					<div
-						className="flex"
-						style={containerStyle}
+						ref={containerRef}
+						className={`flex gap-6 ${shouldScroll ? "" : "justify-center"}`}
+						style={
+							shouldScroll
+								? {
+										animation: `announcement-scroll ${duration}s linear infinite`,
+										width: `max-content`,
+								  }
+								: {}
+						}
 					>
-						{carouselItems.map((announcement, idx) => (
+						{cardsToShow.map((announcement, idx) => (
 							<div
-								key={idx}
-								style={cardStyle}
-								className="last:mr-0"
+								key={announcement.id + "-" + idx}
+								style={{
+									width: `${cardWidth}px`,
+									maxWidth: "90vw",
+									flex: "0 0 auto",
+								}}
 							>
 								<Card className="h-full shadow-lg flex flex-col justify-between">
 									<CardHeader>
@@ -155,6 +128,15 @@ export default function AnnouncementSec() {
 					</div>
 				</div>
 			</div>
+			{/* Animation keyframes */}
+			<style>
+				{`
+          @keyframes announcement-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-${(cardWidth + 24) * announcements.length}px); }
+          }
+        `}
+			</style>
 		</section>
 	);
 }

@@ -36,21 +36,6 @@ const sidebarItems = [
     title: "Announcements",
     href: "/admin/announcements",
     icon: Bell
-  },
-  {
-    title: "Resources",
-    href: "/admin/resources",
-    icon: BookOpen
-  },
-  {
-    title: "Members",
-    href: "/admin/members",
-    icon: Users
-  },
-  {
-    title: "Settings",
-    href: "/admin/settings",
-    icon: Settings
   }
 ];
 

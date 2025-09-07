@@ -12,10 +12,10 @@ export default function HeroSection() {
             <Users className="w-4 h-4 text-brand-brinjal" />
             <span className="text-sm font-medium text-brand-brinjal">Student-Led Innovation</span>
           </div>
-          <h1 className="text-4xl font-bold text-foreground leading-tight">
-            College Department
+          <h1 className="text-3xl sm:text-4xl font-bold text-foreground leading-tight max-w-xs sm:max-w-md">
+            ThinkBotz<br />
             <span className="bg-gradient-to-r from-brand-purple to-brand-brinjal bg-clip-text text-transparent">
-              {" "}Student Association
+              Student Association
             </span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl">
@@ -25,7 +25,7 @@ export default function HeroSection() {
           <div className="w-full flex justify-center">
             <img
               src="/logo.png"
-              alt="CDSA Logo"
+              alt="ThinkBotz Logo"
               className="h-40 w-auto max-w-full object-contain drop-shadow-xl my-4"
             />
           </div>

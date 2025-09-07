@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getAllEvents, addEvent, updateEvent, deleteEvent } from "@/lib/events";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -79,7 +80,8 @@ const categories = ["Technical", "Cultural", "Academic", "Sports", "Workshop"];
 const statuses = ["Active", "Draft", "Completed", "Cancelled"];
 
 export default function EventsManagement() {
-  const [events, setEvents] = useState(initialEvents);
+  const [events, setEvents] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [editingEvent, setEditingEvent] = useState<typeof initialEvents[0] | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -102,6 +104,14 @@ export default function EventsManagement() {
     featured: false
   });
 
+  // Fetch events from Supabase
+  useEffect(() => {
+    getAllEvents().then(data => {
+      setEvents(data || []);
+      setLoading(false);
+    });
+  }, []);
+
   const filteredEvents = events.filter(event => {
     const matchesSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          event.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -111,7 +121,8 @@ export default function EventsManagement() {
     return matchesSearch && matchesCategory && matchesStatus;
   });
 
-  const handleCreateEvent = () => {
+  // Add event (replace handleCreateEvent)
+  const handleCreateEvent = async () => {
     if (!newEvent.title || !newEvent.date || !newEvent.category) {
       toast({
         title: "Error",
@@ -122,37 +133,46 @@ export default function EventsManagement() {
     }
 
     const event = {
-      id: Date.now(),
       ...newEvent,
       coordinators: newEvent.coordinators.split(',').map(c => c.trim()),
-      maxRegistrations: parseInt(newEvent.maxRegistrations) || 100,
-      currentRegistrations: 0
+      max_registrations: parseInt(newEvent.maxRegistrations) || 100,
+      current_registrations: 0,
     };
+    try {
+      await addEvent(event);
+      const updated = await getAllEvents();
+      setEvents(updated || []);
+      setNewEvent({
+        title: "",
+        description: "",
+        date: "",
+        time: "",
+        endTime: "",
+        location: "",
+        coordinators: "",
+        maxRegistrations: "",
+        category: "",
+        status: "Draft",
+        registrationLink: "",
+        featured: false
+      });
+      setIsCreateDialogOpen(false);
 
-    setEvents([...events, event]);
-    setNewEvent({
-      title: "",
-      description: "",
-      date: "",
-      time: "",
-      endTime: "",
-      location: "",
-      coordinators: "",
-      maxRegistrations: "",
-      category: "",
-      status: "Draft",
-      registrationLink: "",
-      featured: false
-    });
-    setIsCreateDialogOpen(false);
-
-    toast({
-      title: "Success",
-      description: "Event created successfully!"
-    });
+      toast({
+        title: "Success",
+        description: "Event created successfully!"
+      });
+    } catch (err) {
+      toast({
+        title: "Error",
+        description: "Failed to create event.",
+        variant: "destructive"
+      });
+    }
   };
 
-  const handleUpdateEvent = () => {
+  // Similarly, update handleUpdateEvent and handleDeleteEvent to use Supabase
+  const handleUpdateEvent = async () => {
     if (!editingEvent) return;
 
     setEvents(events.map(event => 
@@ -166,7 +186,7 @@ export default function EventsManagement() {
     });
   };
 
-  const handleDeleteEvent = (id: number) => {
+  const handleDeleteEvent = async (id: number) => {
     setEvents(events.filter(event => event.id !== id));
     toast({
       title: "Success",
