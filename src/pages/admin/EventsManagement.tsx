@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { getAllEvents, addEvent, updateEvent, deleteEvent } from "@/lib/events";
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -18,7 +17,6 @@ import {
   Users, 
   MapPin, 
   Clock,
-  ExternalLink,
   Eye,
   Search,
   Filter
@@ -80,8 +78,7 @@ const categories = ["Technical", "Cultural", "Academic", "Sports", "Workshop"];
 const statuses = ["Active", "Draft", "Completed", "Cancelled"];
 
 export default function EventsManagement() {
-  const [events, setEvents] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [events, setEvents] = useState<any[]>(initialEvents);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [editingEvent, setEditingEvent] = useState<typeof initialEvents[0] | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -104,25 +101,16 @@ export default function EventsManagement() {
     featured: false
   });
 
-  // Fetch events from Supabase
-  useEffect(() => {
-    getAllEvents().then(data => {
-      setEvents(data || []);
-      setLoading(false);
-    });
-  }, []);
-
   const filteredEvents = events.filter(event => {
     const matchesSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          event.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === "All" || event.category === selectedCategory;
     const matchesStatus = selectedStatus === "All" || event.status === selectedStatus;
-    
     return matchesSearch && matchesCategory && matchesStatus;
   });
 
-  // Add event (replace handleCreateEvent)
-  const handleCreateEvent = async () => {
+  // Add event
+  const handleCreateEvent = () => {
     if (!newEvent.title || !newEvent.date || !newEvent.category) {
       toast({
         title: "Error",
@@ -131,62 +119,50 @@ export default function EventsManagement() {
       });
       return;
     }
-
     const event = {
       ...newEvent,
+      id: events.length ? Math.max(...events.map(e => e.id)) + 1 : 1,
       coordinators: newEvent.coordinators.split(',').map(c => c.trim()),
-      max_registrations: parseInt(newEvent.maxRegistrations) || 100,
-      current_registrations: 0,
+      maxRegistrations: parseInt(newEvent.maxRegistrations) || 100,
+      currentRegistrations: 0,
     };
-    try {
-      await addEvent(event);
-      const updated = await getAllEvents();
-      setEvents(updated || []);
-      setNewEvent({
-        title: "",
-        description: "",
-        date: "",
-        time: "",
-        endTime: "",
-        location: "",
-        coordinators: "",
-        maxRegistrations: "",
-        category: "",
-        status: "Draft",
-        registrationLink: "",
-        featured: false
-      });
-      setIsCreateDialogOpen(false);
-
-      toast({
-        title: "Success",
-        description: "Event created successfully!"
-      });
-    } catch (err) {
-      toast({
-        title: "Error",
-        description: "Failed to create event.",
-        variant: "destructive"
-      });
-    }
+    setEvents([event, ...events]);
+    setNewEvent({
+      title: "",
+      description: "",
+      date: "",
+      time: "",
+      endTime: "",
+      location: "",
+      coordinators: "",
+      maxRegistrations: "",
+      category: "",
+      status: "Draft",
+      registrationLink: "",
+      featured: false
+    });
+    setIsCreateDialogOpen(false);
+    toast({
+      title: "Success",
+      description: "Event created successfully!"
+    });
   };
 
-  // Similarly, update handleUpdateEvent and handleDeleteEvent to use Supabase
-  const handleUpdateEvent = async () => {
+  // Update event
+  const handleUpdateEvent = () => {
     if (!editingEvent) return;
-
     setEvents(events.map(event => 
       event.id === editingEvent.id ? editingEvent : event
     ));
     setEditingEvent(null);
-
     toast({
       title: "Success",
       description: "Event updated successfully!"
     });
   };
 
-  const handleDeleteEvent = async (id: number) => {
+  // Delete event
+  const handleDeleteEvent = (id: number) => {
     setEvents(events.filter(event => event.id !== id));
     toast({
       title: "Success",
