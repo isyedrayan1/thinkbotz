@@ -14,12 +14,14 @@ import Contact from "./pages/Contact";
 import AdminDashboard from "./pages/admin/Dashboard";
 import EventsManagement from "./pages/admin/EventsManagement";
 import NotFound from "./pages/NotFound";
+import { ScrollToTop } from "./components/layout/ScrollToTop";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
+      <ScrollToTop />
       <TooltipProvider>
         <Toaster />
         <Sonner />
