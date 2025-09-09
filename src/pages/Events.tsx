@@ -6,25 +6,35 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "react-router-dom";
 import { Calendar, Search, Filter, ExternalLink } from "lucide-react";
-import { hackathons } from "./EventDetail"; // Import the data from EventDetail.tsx
+import { hackathons } from "../data/eventsdetailed";
 
-const statuses = ["All", "Upcoming", "Completed", "Cancelled"];
+const statuses = ["All", "Upcoming", "Completed"];
 
 export default function Events() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("All");
 
+  // Use isUpcoming boolean for status filtering
   const filteredEvents = hackathons.filter(event => {
     const matchesSearch =
       event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       event.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus =
-      selectedStatus === "All" || event.status === selectedStatus;
+    let matchesStatus = true;
+    if (selectedStatus === "Upcoming") matchesStatus = event.isUpcoming;
+    else if (selectedStatus === "Completed") matchesStatus = !event.isUpcoming;
     return matchesSearch && matchesStatus;
   });
 
+  // Featured and regular events
   const featuredEvents = filteredEvents.filter(event => event.featured);
   const regularEvents = filteredEvents.filter(event => !event.featured);
+
+  // Status badge helper
+  const getStatusBadge = (isUpcoming: boolean) => (
+    <Badge className={isUpcoming ? "bg-green-100 text-green-800" : "bg-gray-200 text-gray-700"}>
+      {isUpcoming ? "Upcoming" : "Completed"}
+    </Badge>
+  );
 
   return (
     <div className="min-h-screen py-12">
@@ -83,7 +93,7 @@ export default function Events() {
                         </CardDescription>
                       </div>
                       <div>
-                        <Badge className="bg-green-100 text-green-800">{event.status}</Badge>
+                        {getStatusBadge(event.isUpcoming)}
                       </div>
                     </div>
                   </CardHeader>
@@ -100,7 +110,7 @@ export default function Events() {
                       <Button asChild className="flex-1 bg-gradient-to-r from-brand-purple to-brand-brinjal text-white rounded-2xl">
                         <Link to={`/events/${event.id}`}>View Details</Link>
                       </Button>
-                      {event.status === "Upcoming" && event.registrationLink && (
+                      {event.isUpcoming && event.registrationLink && (
                         <Button asChild variant="outline" size="sm" className="rounded-2xl">
                           <a href={event.registrationLink} target="_blank" rel="noopener noreferrer">
                             <ExternalLink className="w-4 h-4" />
@@ -141,7 +151,7 @@ export default function Events() {
                       </CardDescription>
                     </div>
                     <div className="flex items-center justify-between mt-2">
-                      <Badge className="bg-green-100 text-green-800">{event.status}</Badge>
+                      {getStatusBadge(event.isUpcoming)}
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-4">

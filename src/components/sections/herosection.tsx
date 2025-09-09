@@ -24,9 +24,13 @@ export default function HeroSection() {
           </p>
           <div className="w-full flex justify-center">
             <img
-              src="/logo.png"
+              src="/logo.webp"
               alt="ThinkBotz Logo"
+              width={320} // or your actual image width
+              height={160} // or your actual image height
               className="h-40 w-auto max-w-full object-contain drop-shadow-xl my-4"
+              loading="eager"
+              decoding="async"
             />
           </div>
           <div className="flex flex-col gap-4 w-full mt-2">

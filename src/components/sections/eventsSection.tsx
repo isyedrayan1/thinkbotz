@@ -2,14 +2,22 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { Calendar, ExternalLink } from "lucide-react";
-import { hackathons } from "@/pages/EventDetail"; // Use the real event data
+import { hackathons } from "../../data/eventsdetailed";
+import { Badge } from "@/components/ui/badge";
+
+// Use isUpcoming boolean for status, sort by date ascending, show only upcoming
+const upcomingEvents = hackathons
+  .filter(event => event.isUpcoming)
+  .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+  .slice(0, 3);
 
 export default function AnnouncementSec() {
-  // Get only upcoming events, sorted by date ascending
-  const upcomingEvents = hackathons
-    .filter(event => event.status === "Upcoming")
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-    .slice(0, 3);
+  // Status badge helper
+  const getStatusBadge = (isUpcoming: boolean) => (
+    <Badge className={isUpcoming ? "bg-green-100 text-green-800" : "bg-gray-200 text-gray-700"}>
+      {isUpcoming ? "Upcoming" : "Completed"}
+    </Badge>
+  );
 
   return (
     <section className="py-16 bg-background">
@@ -33,19 +41,18 @@ export default function AnnouncementSec() {
               key={event.id}
               className={
                 "hover:shadow-md transition-shadow bg-white" +
-                (idx === 0 && event.featured
-                  ? " border-l-4 border-l-brand-purple"
-                  : "")
+                (event.featured ? " border-l-4 border-l-brand-purple" : "")
               }
             >
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <Calendar className="w-5 h-5 text-brand-purple" />
-                  {event.featured && idx === 0 && (
+                  {event.featured && (
                     <span className="text-xs px-2 py-1 rounded-full bg-brand-purple text-white font-semibold ml-2">
                       Featured
                     </span>
                   )}
+                  {getStatusBadge(event.isUpcoming)}
                 </div>
                 <CardTitle className="text-lg">{event.title}</CardTitle>
                 <CardDescription>
@@ -59,9 +66,24 @@ export default function AnnouncementSec() {
                     {event.coordinators.map((coordinator, index) => (
                       <span
                         key={index}
-                        className="text-xs bg-brand-lavender text-brand-brinjal px-2 py-1 rounded-full"
+                        className={
+                          "text-xs px-2 py-1 rounded-full " +
+                          (coordinator.role === "faculty"
+                            ? "bg-blue-100 text-blue-800"
+                            : "bg-pink-100 text-pink-800")
+                        }
                       >
                         {coordinator.name}
+                        {coordinator.role === "Student" && (
+                          <span className="ml-1 text-[10px] text-muted-foreground">{coordinator.class}</span>
+                        )}
+                        <span className="ml-1">
+                          {coordinator.role === "faculty" ? (
+                            <Badge variant="secondary" className="text-[10px] bg-blue-100 text-blue-800 ml-1">Faculty</Badge>
+                          ) : (
+                            <Badge variant="secondary" className="text-[10px] bg-pink-100 text-pink-800 ml-1">Student</Badge>
+                          )}
+                        </span>
                       </span>
                     ))}
                   </div>

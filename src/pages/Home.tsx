@@ -11,7 +11,6 @@ import {
 import HeroSection from "../components/sections/herosection";
 import AnnouncementSec from "../components/sections/anouncementsec";
 import AboutSection from "../components/sections/aboutsection";
-import EventsSection from "../components/sections/eventsSection";
 import GallerySec from "../components/sections/gallerysec";
 import Achievements from "../components/sections/acheivements";
 
@@ -28,7 +27,7 @@ export default function Home() {
       {/* Latest Announcements */}
     <AnnouncementSec />
       {/* Upcoming Events Preview */}
-    <EventsSection />
+    
       {/* Brief About Section */}
       <AboutSection />
 

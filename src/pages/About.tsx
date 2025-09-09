@@ -1,108 +1,49 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-    Users,
-    Link as LinkIcon,
-    Target,
-    Eye,
-    MapPin,
-    Phone,
-    Mail,
-} from "lucide-react";
+import { Users, Link as LinkIcon, Target, Eye, MapPin, Mail } from "lucide-react";
 
-// Updated hierarchy with Treasurer included.
-// To add more levels, just add a new level in the hierarchyMembers array and update the groupings below.
+// Updated hierarchy: only name, level, year, link. "media" is now a level.
+// Presidents and Co-Presidents are now separate.
 const hierarchyMembers = [
     // HOD
     {
-        role: "Head of Department",
-        name: "Dr. Shaik Parveen mam",
+        name: "Dr. Shaik Parveen",
         level: "hod",
         year: "",
         link: { enabled: false, url: "" },
     },
-    // President
-    {
-        role: "President",
-        name: "Syed Mohammad Sameer",
-        level: "president",
-        year: "4th Year",
-        link: { enabled: true, url: "https://linkedin.com/in/alexmartinez" },
-    },
-    {
-        role: "Co-President",
-        name: "Shaik Aslam",
-        level: "president",
-        year: "4th Year",
-        link: { enabled: true, url: "" },
-    },
-    // Treasurer
-    {
-        role: "Treasurer",
-        name: "Syed Jaffar",
-        level: "treasurer",
-        year: "3rd Year",
-        link: { enabled: true, url: "https://linkedin.com/in/rahulsingh" },
-    },
+    // Presidents
+    { name: "S.MD Shoyab", level: "president", year: "4th Year", link: { enabled: false, url: "https://linkedin.com/in/alexmartinez" } },
+    { name: "S.MD Sameer", level: "president", year: "3rd Year", link: { enabled: false, url: "https://linkedin.com/in/alexmartinez" } },
+    { name: "S. Abdul Hameed", level: "president", year: "4th Year", link: { enabled: false, url: "https://linkedin.com/in/alexmartinez" } },
+    { name: "T. Nikhitha Reddy", level: "president", year: "4th Year", link: { enabled: false, url: "https://linkedin.com/in/alexmartinez" } },
+    { name: "U. Dedeepya", level: "president", year: "3rd Year", link: { enabled: false, url: "https://linkedin.com/in/alexmartinez" } },
+    // Co-Presidents
+    { name: "J. Takeshwar", level: "co-president", year: "4th Year", link: { enabled: false, url: "" } },
+    { name: "Shaik Aslam", level: "co-president", year: "3rd Year", link: { enabled: false, url: "" } },
+    { name: "R. Sindhu", level: "co-president", year: "4th Year", link: { enabled: false, url: "" } },
+    { name: "P. Swetha", level: "co-president", year: "3rd Year", link: { enabled: false, url: "" } },
+    // Treasurers
+    { name: "S.MD. Abdul Hafeez", level: "treasurer", year: "4th Year", link: { enabled: false, url: "https://linkedin.com/in/rahulsingh" } },
+    { name: "S. Jaffar Hussain", level: "treasurer", year: "3rd Year", link: { enabled: false, url: "https://linkedin.com/in/rahulsingh" } },
+    { name: "E. Gayathri", level: "treasurer", year: "4th Year", link: { enabled: false, url: "https://linkedin.com/in/rahulsingh" } },
+    { name: "B. Dheeraj Srnivas", level: "treasurer", year: "3rd Year", link: { enabled: false, url: "https://linkedin.com/in/rahulsingh" } },
+    // Secretaries
+    { name: "T. Balu", level: "secretary", year: "4th Year", link: { enabled: false, url: "" } },
+    { name: "S. Nihal", level: "secretary", year: "4th Year", link: { enabled: false, url: "" } },
+    { name: "Y.C Divya Sree", level: "secretary", year: "3rd Year", link: { enabled: false, url: "" } },
+    { name: "s. Sumaya", level: "secretary", year: "3rd Year", link: { enabled: false, url: "" } },
     // Technical Team
-    {
-        role: "Technical Team Lead",
-        name: "SYED RAYAN",
-        level: "technical",
-        year: "3rd Year",
-        link: { enabled: true, url: "https://isyedrayan.online" },
-    },
-	{
-        role: "Technical Team Lead",
-        name: "Syed Naseer",
-        level: "technical",
-        year: "3rd Year",
-        link: { enabled: true, url: "https://github.com/snr9" },
-    },
-	{
-        role: "Technical Team Lead",
-        name: "haik Shahul",
-        level: "technical",
-        year: "3rd Year",
-        link: { enabled: true, url: "https://github.com/snr9" },
-    },
-    // Media
-    {
-        role: "Media Lead",
-        name: "Priya Patel",
-        level: "others",
-        year: "3rd Year",
-        link: { enabled: false, url: "https://instagram.com/priyapatel" },
-    },
-    // Coordinators
-    {
-        role: "Events Coordinator",
-        name: "Jessica Davis",
-        level: "coordinator",
-        year: "2nd Year",
-        link: { enabled: false, url: "" },
-    },
-    {
-        role: "Cultural Coordinator",
-        name: "David Wilson",
-        level: "coordinator",
-        year: "2nd Year",
-        link: { enabled: false, url: "" },
-    },
-    {
-        role: "Sports Coordinator",
-        name: "Lisa Thompson",
-        level: "coordinator",
-        year: "2nd Year",
-        link: { enabled: false, url: "https://instagram.com/lisathompson" },
-    },
-    {
-        role: "Academic Coordinator",
-        name: "Ryan Garcia",
-        level: "coordinator",
-        year: "2nd Year",
-        link: { enabled: false, url: "" },
-    },
+    { name: "S. Abdul Aleem", level: "technical", year: "4th Year", link: { enabled: false, url: "https://github.com/snr9" } },
+    { name: "Syed Rayan", level: "technical", year: "3rd Year", link: { enabled: true, url: "https://isyedrayan.online" } },
+    { name: "Syed Naseer", level: "technical", year: "3rd Year", link: { enabled: true, url: "https://github.com/snr9" } },
+    { name: "Shaik Shahul", level: "technical", year: "3rd Year", link: { enabled: true, url: "https://github.com/snr9" } },
+    { name: "S. Aneeqa Thamreen", level: "technical", year: "4th Year", link: { enabled: false, url: "https://github.com/snr9" } },
+    // Media Team
+    { name: "S. Govind Sai Charan", level: "media", year: "4th Year", link: { enabled: false, url: "" } },
+    { name: "K. Sharina", level: "media", year: "3rd Year", link: { enabled: false, url: "" } },
+    { name: "A. Nithya Tharun", level: "media", year: "3rd Year", link: { enabled: false, url: "" } },
+    { name: "G. Divya Bharati", level: "media", year: "3rd Year", link: { enabled: false, url: "" } },
 ];
 
 const getLevelColor = (level: string) => {
@@ -111,14 +52,16 @@ const getLevelColor = (level: string) => {
             return "bg-gradient-to-r from-amber-500 to-orange-500";
         case "president":
             return "bg-gradient-to-r from-brand-purple to-brand-brinjal";
+        case "co-president":
+            return "bg-gradient-to-r from-purple-400 to-pink-500";
         case "treasurer":
             return "bg-gradient-to-r from-yellow-500 to-yellow-700";
         case "technical":
             return "bg-gradient-to-r from-blue-500 to-indigo-500";
-        case "coordinator":
-            return "bg-gradient-to-r from-green-500 to-emerald-500";
-        case "others":
+        case "media":
             return "bg-gradient-to-r from-pink-500 to-fuchsia-500";
+        case "secretary":
+            return "bg-gradient-to-r from-green-500 to-green-700";
         default:
             return "bg-gradient-to-r from-gray-500 to-gray-600";
     }
@@ -130,14 +73,16 @@ const getLevelBadge = (level: string) => {
             return { variant: "secondary" as const, text: "HOD" };
         case "president":
             return { variant: "default" as const, text: "President" };
+        case "co-president":
+            return { variant: "secondary" as const, text: "Co-President" };
         case "treasurer":
             return { variant: "secondary" as const, text: "Treasurer" };
         case "technical":
             return { variant: "secondary" as const, text: "Technical" };
-        case "coordinator":
-            return { variant: "outline" as const, text: "Coordinator" };
-        case "others":
-            return { variant: "secondary" as const, text: "Other" };
+        case "media":
+            return { variant: "secondary" as const, text: "Media" };
+        case "secretary":
+            return { variant: "secondary" as const, text: "Secretary" };
         default:
             return { variant: "secondary" as const, text: "Member" };
     }
@@ -147,9 +92,11 @@ export default function About() {
     // Group members by new hierarchy
     const hod = hierarchyMembers.filter((m) => m.level === "hod");
     const president = hierarchyMembers.filter((m) => m.level === "president");
+    const coPresident = hierarchyMembers.filter((m) => m.level === "co-president");
     const treasurer = hierarchyMembers.filter((m) => m.level === "treasurer");
     const technical = hierarchyMembers.filter((m) => m.level === "technical");
-    const coordinators = hierarchyMembers.filter((m) => m.level === "coordinator");
+    const media = hierarchyMembers.filter((m) => m.level === "media");
+    const secretary = hierarchyMembers.filter((m) => m.level === "secretary");
 
     // Helper to render a group
     const renderGroup = (title: string, members: typeof hierarchyMembers) =>
@@ -174,15 +121,12 @@ export default function About() {
                                 </div>
                                 <CardTitle className="text-lg">{member.name}</CardTitle>
                                 <div className="flex flex-col items-center space-y-2">
-                                    <p className="text-sm font-medium text-brand-brinjal">
-                                        {member.role}
-                                    </p>
                                     <Badge {...getLevelBadge(member.level)}>
                                         {getLevelBadge(member.level).text}
                                     </Badge>
                                     {member.level !== "hod" && (
                                         <span className="text-xs text-muted-foreground">
-                                            Student, {member.year}
+                                            {member.year}
                                         </span>
                                     )}
                                 </div>
@@ -286,10 +230,12 @@ export default function About() {
                         </p>
                     </div>
                     {renderGroup("Head of Department", hod)}
-                    {renderGroup("President & Co-President", president)}
+                    {renderGroup("President", president)}
+                    {renderGroup("Co-President", coPresident)}
                     {renderGroup("Treasurer", treasurer)}
+                    {renderGroup("Secretary", secretary)}
                     {renderGroup("Technical Team", technical)}
-                    {renderGroup("Coordinators", coordinators)}
+                    {renderGroup("Media Team", media)}
                 </div>
 
                 {/* Contact Information */}
@@ -333,14 +279,13 @@ export default function About() {
                             </div>
                             <h3 className="font-semibold">Technical Team</h3>
                             <p className="text-sm text-muted-foreground">
-                                Havinng trouble or need Tech support:<br />
+                                Having trouble or need Tech support:<br />
                                 <a
                                     href="mailto:isyedrayan.online@gmail.com"
                                     className="text-brand-brinjal underline"
                                 >
                                     mesyedrn@gmail.com
                                 </a>
-                                
                             </p>
                         </div>
                     </CardContent>
