@@ -1,41 +1,32 @@
-     import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { 
-  Calendar, Users, BookOpen, Trophy, ArrowRight, Bell, Target, Eye, 
-  Award, TrendingUp, Camera, Mail, Phone, MapPin, Star, Code, 
-  Palette, Zap, Globe, Heart, CheckCircle, Image
-} from "lucide-react";
+import { hardcodedGallerySections, type DriveImage } from "@/lib/driveGallery";
 
-const galleryHighlights = [
-  {
-    id: 1,
-    title: "Tech Fest 2023",
-    imageUrl: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80",
-    category: "Technical"
-  },
-  {
-    id: 2,
-    title: "Cultural Night",
-    imageUrl: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&q=80",
-    category: "Cultural"
-  },
-  {
-    id: 3,
-    title: "Sports Championship",
-    imageUrl: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&q=80",
-    category: "Sports"
-  },
-  {
-    id: 4,
-    title: "Research Symposium",
-    imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
-    category: "Academic"
-  }
+const projects = [
+	{ title: "MindSpark", folderId: import.meta.env.VITE_DRIVE_MINDSPARK_FOLDER_ID as string },
+	{ title: "PromptFusion", folderId: import.meta.env.VITE_DRIVE_PROMPTFUSION_FOLDER_ID as string },
+	{ title: "PosterVision", folderId: import.meta.env.VITE_DRIVE_POSTERVISION_FOLDER_ID as string },
+	{ title: "PromptStack", folderId: import.meta.env.VITE_DRIVE_PROMPTSTACK_FOLDER_ID as string },
+	{ title: "FFSAL", folderId: import.meta.env.VITE_DRIVE_FFSAL_FOLDER_ID as string },
+	{ title: "Inauguration Event", folderId: import.meta.env.VITE_DRIVE_INAUGURATION_FOLDER_ID as string },
 ];
 
 export default function GallerySec() {
+  const [images, setImages] = useState<{ img: DriveImage; projectTitle: string }[]>([]);
+
+  useEffect(() => {
+    const highlights: { img: DriveImage; projectTitle: string }[] = [];
+    hardcodedGallerySections.forEach((section) => {
+      if (section.images.length > 0) {
+        highlights.push({ img: section.images[0], projectTitle: section.title });
+      }
+    });
+    setImages(highlights.slice(0, 4));
+  }, []);
+
   return (
  <section className="py-16 bg-brand-lavender/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -50,18 +41,20 @@ export default function GallerySec() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            {galleryHighlights.map((item) => (
-              <Card key={item.id} className="group overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            {images.map((item) => (
+              <Card key={item.img.id} className="group overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                 <div className="aspect-square overflow-hidden">
                   <img
-                    src={item.imageUrl}
-                    alt={item.title}
+                    src={item.img.thumbnailUrl}
+                    alt={`${item.projectTitle} highlight`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <CardContent className="p-3">
-                  <h4 className="font-medium text-sm truncate">{item.title}</h4>
-                  <Badge className="text-xs mt-1" variant="secondary">{item.category}</Badge>
+                  <h4 className="font-medium text-sm truncate">{item.projectTitle}</h4>
+                  <Badge className="text-xs mt-1" variant="secondary">
+                    {item.projectTitle}
+                  </Badge>
                 </CardContent>
               </Card>
             ))}
