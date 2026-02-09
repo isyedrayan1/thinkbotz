@@ -79,22 +79,22 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen py-12">
+    <div className="min-h-screen py-12 md:py-16 pt-20 md:pt-28 pb-16 md:pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 md:mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Contact Us</h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
             Get in touch with our team. We're here to help and answer any questions you may have.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Contact Form */}
           <div>
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <CardTitle className="text-2xl flex items-center space-x-2">
+            <Card className="hover:shadow-lg transition-shadow h-full">
+              <CardHeader className="pb-6 md:pb-8">
+                <CardTitle className="text-2xl md:text-3xl flex items-center space-x-3 mb-3">
                   <div className="w-8 h-8 bg-gradient-to-r from-brand-purple to-brand-brinjal rounded-lg flex items-center justify-center">
                     <Send className="w-4 h-4 text-white" />
                   </div>
@@ -105,7 +105,7 @@ export default function Contact() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6 md:space-y-7\">
                   <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">

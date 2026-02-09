@@ -98,8 +98,8 @@ export default function EventDetail() {
   };
 
   return (
-    <div className="min-h-screen py-6 sm:py-10">
-      <div className="max-w-3xl mx-auto px-2 sm:px-4 lg:px-8">
+    <div className="min-h-screen py-8 md:py-12 pt-20 md:pt-28 pb-16 md:pb-20">
+      <div className="max-w-4xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         {/* Back Button and Apply Now / Event Report */}
         <div className="mb-4 flex flex-col sm:flex-row items-center gap-2">
           <Button asChild variant="outline" size="sm" className="w-full sm:w-auto">

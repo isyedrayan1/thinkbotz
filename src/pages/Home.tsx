@@ -34,7 +34,7 @@ export default function Home() {
       <GallerySec />  
 
       {/* Journey Timeline Highlight */}
-      <section className="py-20 px-4 bg-gradient-to-b from-transparent to-brand-lavender/20">
+      <section className="py-12 md:py-20 px-4 bg-gradient-to-b from-transparent to-brand-lavender/20\">
         <div className="max-w-4xl mx-auto flex flex-col items-center text-center gap-8">
           <div>
             <Badge className="mb-4 bg-brand-purple text-white">Our Story</Badge>

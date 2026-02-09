@@ -151,21 +151,21 @@ export default function About() {
         );
 
     return (
-        <div className="min-h-screen py-12">
+        <div className="min-h-screen py-12 md:py-16 pt-20 md:pt-28 pb-16 md:pb-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
-                <div className="text-center mb-16">
+                <div className="text-center mb-16 md:mb-20">
                     <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
                         About Our Association
                     </h1>
-                    <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                    <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
                         Learn about our mission, vision, and the dedicated team that makes it
                         all possible
                     </p>
                 </div>
 
                 {/* Mission & Vision */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16 md:mb-20">
                     <Card className="hover:shadow-lg transition-shadow">
                         <CardHeader>
                             <div className="flex items-center space-x-3">

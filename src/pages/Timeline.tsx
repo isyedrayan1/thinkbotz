@@ -41,7 +41,7 @@ const TimelineComponent = ({ data }: { data: TimelineEntry[] }) => {
       ref={containerRef}
     >
       {/* Full Viewport Hero Section */}
-      <div className="relative w-full h-screen flex items-center justify-center px-4 md:px-10">
+      <div className="relative w-full h-screen flex items-center justify-center px-4 md:px-10 pt-16 md:pt-20 lg:pt-24">
         <div className="text-center max-w-5xl mx-auto">
           <motion.h2
             className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-brand-purple to-brand-brinjal bg-clip-text text-transparent mb-6 leading-tight"

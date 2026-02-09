@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-brand-lavender via-background to-brand-lavender/50 h-screen flex items-center justify-center">
+    <section className="relative overflow-hidden bg-gradient-to-br from-brand-lavender via-background to-brand-lavender/50 min-h-screen flex items-center justify-center pt-16 md:pt-20 lg:pt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Mobile layout: stack text, image, CTA, all left-aligned */}
         <div className="flex flex-col md:hidden items-start text-left space-y-6">

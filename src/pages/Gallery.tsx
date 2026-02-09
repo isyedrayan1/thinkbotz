@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchMultipleFolders, type DriveGallerySection, type DriveImage } from "@/lib/driveGallery";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const tags = ["All", "MindSpark", "PromptFusion", "PosterVision", "PromptStack", "FFSAL", "Inauguration Event"];
 
@@ -42,24 +43,24 @@ export default function Gallery() {
 	const selectedImage = selectedIndex !== null ? flatImages[selectedIndex] : null;
 
 	return (
-		<div className="min-h-screen py-12 bg-background">
+		<div className="min-h-screen py-8 md:py-16 pt-20 md:pt-28 pb-16 md:pb-20 bg-background">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				{/* Header */}
-				<div className="text-center mb-12">
-					<h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+				<div className="text-center mb-10 md:mb-16">
+					<h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 md:mb-4">
 						Gallery
 					</h1>
-					<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+					<p className="text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto">
 						Explore projects and events from our amazing teams.
 					</p>
 				</div>
 
-				{/* Tags Filter */}
-				<div className="flex justify-center mb-8 space-x-4">
+				{/* Tags Filter - Desktop Buttons */}
+				<div className="hidden md:flex justify-center mb-10 md:mb-16 gap-2 flex-wrap">
 					{tags.map((tag) => (
 						<button
 							key={tag}
-							className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+							className={`px-3 md:px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all ${
 								selectedTag === tag
 									? "bg-brand-brinjal text-white"
 									: "bg-gray-200 text-gray-700 hover:bg-gray-300"
@@ -71,29 +72,45 @@ export default function Gallery() {
 					))}
 				</div>
 
+				{/* Tags Filter - Mobile Dropdown */}
+			<div className="md:hidden mb-8 md:mb-10 flex justify-center">
+					<Select value={selectedTag} onValueChange={setSelectedTag}>
+						<SelectTrigger className="w-full max-w-xs">
+							<SelectValue placeholder="Select a project" />
+						</SelectTrigger>
+						<SelectContent>
+							{tags.map((tag) => (
+								<SelectItem key={tag} value={tag}>
+									{tag}
+								</SelectItem>
+							))}
+						</SelectContent>
+					</Select>
+				</div>
+
 				{/* Project Sections */}
 				{isLoading ? (
-					<div className="text-center text-muted-foreground">Loading images...</div>
-				) : filteredSections.length > 0 ? (
-					<div className="space-y-16">
+				<div className="text-center text-muted-foreground py-16">Loading images...</div>
+			) : filteredSections.length > 0 && filteredSections.some((s) => s.images.length > 0) ? (
+				<div className="space-y-14 md:space-y-20">
 						{filteredSections.map((section) => (
 							section.images.length > 0 && (
 								<div key={section.title}>
 									{/* Section Header */}
-									<div className="mb-6">
-										<h2 className="text-2xl font-bold text-brand-brinjal">
+								<div className="mb-6 md:mb-8">
+									<h2 className="text-2xl md:text-3xl font-bold text-brand-brinjal mb-2">
 											{section.title}
 										</h2>
-										<div className="text-sm text-muted-foreground">
-											{section.images.length} images
+										<div className="text-xs md:text-sm text-muted-foreground">
+											{section.images.length} {section.images.length === 1 ? "image" : "images"}
 										</div>
 									</div>
 									{/* Images Grid */}
-									<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
+									<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
 										{section.images.map((img) => (
 											<div
 												key={img.id}
-												className="group rounded-2xl overflow-hidden bg-white shadow hover:shadow-lg transition-all cursor-pointer"
+												className="group rounded-lg md:rounded-2xl overflow-hidden bg-white shadow hover:shadow-lg transition-all duration-300 cursor-pointer hover:-translate-y-1"
 												onClick={() => {
 													const index = sections
 														.flatMap((s) => s.images.map((i) => ({ img: i, sectionTitle: s.title })))
@@ -101,7 +118,7 @@ export default function Gallery() {
 													setSelectedIndex(index >= 0 ? index : null);
 												}}
 											>
-												<div className="aspect-[4/3] overflow-hidden">
+												<div className="aspect-square overflow-hidden bg-gray-100">
 													<img
 														src={img.thumbnailUrl}
 														alt={`${section.title} image`}
@@ -117,7 +134,11 @@ export default function Gallery() {
 						))}
 					</div>
 				) : (
-					<div className="text-center text-muted-foreground">No images found.</div>
+					<div className="text-center py-12">
+						<p className="text-muted-foreground text-sm md:text-base">
+							{selectedTag === "All" ? "No images found." : `No images available for ${selectedTag}.`}
+						</p>
+					</div>
 				)}
 			</div>
 		</div>
