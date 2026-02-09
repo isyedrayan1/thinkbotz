@@ -1,104 +1,21 @@
 import { useEffect, useState } from "react";
-import { fetchMultipleFolders, type DriveGallerySection, type DriveImage } from "@/lib/driveGallery";
+import { hardcodedGallerySections, type DriveGallerySection, type DriveImage } from "@/lib/driveGallery";
 
-const projects = [
-	{ title: "MindSpark", folderId: import.meta.env.VITE_DRIVE_MINDSPARK_FOLDER_ID as string },
-	{ title: "PromptFusion", folderId: import.meta.env.VITE_DRIVE_PROMPTFUSION_FOLDER_ID as string },
-	{ title: "PosterVision", folderId: import.meta.env.VITE_DRIVE_POSTERVISION_FOLDER_ID as string },
-	{ title: "PromptStack", folderId: import.meta.env.VITE_DRIVE_PROMPTSTACK_FOLDER_ID as string },
-	{ title: "FFSAL", folderId: import.meta.env.VITE_DRIVE_FFSAL_FOLDER_ID as string },
-	{ title: "Inauguration Event", folderId: import.meta.env.VITE_DRIVE_INAUGURATION_FOLDER_ID as string },
-];
+const tags = ["All", "MindSpark", "PromptFusion", "PosterVision", "PromptStack", "FFSAL", "Inauguration Event"];
 
 export default function Gallery() {
 	const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-	const [sections, setSections] = useState<DriveGallerySection[]>([]);
-	const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
-	const [imageLoadError, setImageLoadError] = useState(false);
-	const [zoom, setZoom] = useState(1);
-	const [isDragging, setIsDragging] = useState(false);
-	const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-	const [offset, setOffset] = useState({ x: 0, y: 0 });
+	const [sections, setSections] = useState<DriveGallerySection[]>(hardcodedGallerySections);
+	const [selectedTag, setSelectedTag] = useState("All");
+
+	const filteredSections = selectedTag === "All"
+		? sections
+		: sections.filter((section) => section.title === selectedTag);
 
 	const flatImages = sections.flatMap((section) =>
 		section.images.map((img) => ({ img, sectionTitle: section.title }))
 	);
 	const selectedImage = selectedIndex !== null ? flatImages[selectedIndex] : null;
-
-	useEffect(() => {
-		const controller = new AbortController();
-		const apiKey = import.meta.env.VITE_DRIVE_API_KEY as string | undefined;
-
-		setIsLoading(true);
-		setError(null);
-
-		fetchMultipleFolders(apiKey ?? "", projects, controller.signal)
-			.then((items) => setSections(items))
-			.catch((err: Error) => setError(err.message))
-			.finally(() => setIsLoading(false));
-
-		return () => controller.abort();
-	}, []);
-
-
-	useEffect(() => {
-		if (selectedIndex === null || flatImages.length <= 1) return;
-
-		const nextIndex = (selectedIndex + 1) % flatImages.length;
-		const prevIndex = (selectedIndex - 1 + flatImages.length) % flatImages.length;
-
-		const preload = [nextIndex, prevIndex].map((index) => {
-			const preloader = new Image();
-			preloader.src = flatImages[index].img.fullUrl;
-			return preloader;
-		});
-
-		return () => {
-			preload.forEach((preloader) => {
-				preloader.src = "";
-			});
-		};
-	}, [selectedIndex, flatImages]);
-
-	useEffect(() => {
-		if (selectedIndex === null || flatImages.length === 0) return;
-
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (event.key === "Escape") {
-				setSelectedIndex(null);
-				setImageLoadError(false);
-				return;
-			}
-
-			if (flatImages.length <= 1) return;
-
-			if (event.key === "ArrowLeft") {
-				setImageLoadError(false);
-				setSelectedIndex((current) => {
-					if (current === null) return 0;
-					return (current - 1 + flatImages.length) % flatImages.length;
-				});
-			}
-
-			if (event.key === "ArrowRight") {
-				setImageLoadError(false);
-				setSelectedIndex((current) => {
-					if (current === null) return 0;
-					return (current + 1) % flatImages.length;
-				});
-			}
-		};
-
-		window.addEventListener("keydown", handleKeyDown);
-		return () => window.removeEventListener("keydown", handleKeyDown);
-	}, [selectedIndex, flatImages.length]);
-
-	useEffect(() => {
-		if (selectedIndex === null) return;
-		setZoom(1);
-		setOffset({ x: 0, y: 0 });
-	}, [selectedIndex]);
 
 	return (
 		<div className="min-h-screen py-12 bg-background">
@@ -113,26 +30,29 @@ export default function Gallery() {
 					</p>
 				</div>
 
-				{isLoading && (
-					<div className="text-center text-muted-foreground">Loading images...</div>
-				)}
-				{error && (
-					<div className="text-center text-red-600">
-						{error}
-					</div>
-				)}
-				{!isLoading && !error && sections.every(s => s.images.length === 0) && (
-					<div className="text-center text-muted-foreground">
-						No images found in any folder.
-					</div>
-				)}
+				{/* Tags Filter */}
+				<div className="flex justify-center mb-8 space-x-4">
+					{tags.map((tag) => (
+						<button
+							key={tag}
+							className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+								selectedTag === tag
+									? "bg-brand-brinjal text-white"
+									: "bg-gray-200 text-gray-700 hover:bg-gray-300"
+							}`}
+							onClick={() => setSelectedTag(tag)}
+						>
+							{tag}
+						</button>
+					))}
+				</div>
 
 				{/* Project Sections */}
-				{sections.length > 0 && (
+				{filteredSections.length > 0 && (
 					<div className="space-y-16">
-						{sections.map((section) => (
+						{filteredSections.map((section) => (
 							section.images.length > 0 && (
-								<div key={section.folderId}>
+								<div key={section.title}>
 									{/* Section Header */}
 									<div className="mb-6">
 										<h2 className="text-2xl font-bold text-brand-brinjal">
@@ -149,9 +69,10 @@ export default function Gallery() {
 												key={img.id}
 												className="group rounded-2xl overflow-hidden bg-white shadow hover:shadow-lg transition-all cursor-pointer"
 												onClick={() => {
-													const index = flatImages.findIndex((entry) => entry.img.id === img.id);
+													const index = sections
+														.flatMap((s) => s.images.map((i) => ({ img: i, sectionTitle: s.title })))
+														.findIndex((entry) => entry.img.id === img.id);
 													setSelectedIndex(index >= 0 ? index : null);
-													setImageLoadError(false);
 												}}
 											>
 												<div className="aspect-[4/3] overflow-hidden">
