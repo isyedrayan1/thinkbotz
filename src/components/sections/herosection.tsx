@@ -1,11 +1,12 @@
 import { Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Magnet from "@/components/ui/magnet";
 import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-brand-lavender via-background to-brand-lavender/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
+    <section className="relative overflow-hidden bg-gradient-to-br from-brand-lavender via-background to-brand-lavender/50 h-screen flex items-center justify-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Mobile layout: stack text, image, CTA, all left-aligned */}
         <div className="flex flex-col md:hidden items-start text-left space-y-6">
           <div className="inline-flex items-center space-x-2 bg-brand-purple/10 px-4 py-2 rounded-full mb-2">
@@ -23,15 +24,23 @@ export default function HeroSection() {
             Join our vibrant community of learners and leaders.
           </p>
           <div className="w-full flex justify-center">
-            <img
-              src="/logo.webp"
-              alt="ThinkBotz Logo"
-              width={320} // or your actual image width
-              height={160} // or your actual image height
-              className="h-40 w-auto max-w-full object-contain drop-shadow-xl my-4"
-              loading="eager"
-              decoding="async"
-            />
+            <Magnet
+              padding={80}
+              magnetStrength={2.5}
+              activeTransition="transform 0.3s ease-out"
+              inactiveTransition="transform 0.5s ease-in-out"
+              wrapperClassName="inline-block"
+            >
+              <img
+                src="/logo.webp"
+                alt="ThinkBotz Logo"
+                width={320}
+                height={160}
+                className="h-40 w-auto max-w-full object-contain drop-shadow-xl my-4"
+                loading="eager"
+                decoding="async"
+              />
+            </Magnet>
           </div>
           <div className="flex flex-col gap-4 w-full mt-2">
             <Button asChild size="lg" className="rounded-2xl w-full sm:w-auto text-left">
@@ -71,11 +80,19 @@ export default function HeroSection() {
           </div>
           {/* Right: Logo */}
           <div className="flex justify-end items-center h-96 order-1 md:order-2 mb-0">
-            <img
-              src="/logo.png"
-              alt="CDSA Logo"
-              className="h-full w-auto max-w-full object-contain drop-shadow-xl"
-            />
+            <Magnet
+              padding={120}
+              magnetStrength={2}
+              activeTransition="transform 0.3s ease-out"
+              inactiveTransition="transform 0.5s ease-in-out"
+              wrapperClassName="inline-flex items-center justify-center w-full h-full"
+            >
+              <img
+                src="/logo.png"
+                alt="CDSA Logo"
+                className="h-full w-auto max-w-full object-contain drop-shadow-xl"
+              />
+            </Magnet>
           </div>
         </div>
       </div>

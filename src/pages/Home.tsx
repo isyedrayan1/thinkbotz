@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 
 import HeroSection from "../components/sections/herosection";
-import AnnouncementSec from "../components/sections/anouncementsec";
 import AboutSection from "../components/sections/aboutsection";
 import GallerySec from "../components/sections/gallerysec";
 import Achievements from "../components/sections/acheivements";
@@ -24,9 +23,6 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <HeroSection />
-      {/* Latest Announcements */}
-    <AnnouncementSec />
-      {/* Upcoming Events Preview */}
     
       {/* Brief About Section */}
       <AboutSection />

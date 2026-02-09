@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, GraduationCap } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import StarBorder from "@/components/ui/star-border";
 
 const navigation = [
 	{ name: "Home", href: "/" },
@@ -20,65 +21,28 @@ export function Navbar() {
 	const isActive = (href: string) => location.pathname === href;
 
 	return (
-		<nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
-			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div className="flex justify-between h-16">
-					{/* Logo and Brand */}
-					<div className="flex items-center space-x-3">
-						<Link
-							to="/"
-							className="font-inter font-extrabold text-lg sm:text-xl bg-gradient-to-r from-brand-purple to-brand-brinjal bg-clip-text text-transparent hover:opacity-80 transition-opacity"
-						>
-							ThinkBotz
-						</Link>
-					</div>
-
-					{/* Desktop Navigation */}
-					<div className="hidden md:flex md:items-center md:space-x-8">
-						{navigation.map((item) => (
+		<nav className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-5xl">
+			<StarBorder color="#6C3EF5" speed="6s" thickness={1}>
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+					<div className="flex justify-between h-16">
+						{/* Logo and Brand */}
+						<div className="flex items-center space-x-3">
 							<Link
-								key={item.name}
-								to={item.href}
-								className={cn(
-									"px-3 py-2 text-sm font-medium rounded-lg transition-colors",
-									isActive(item.href)
-										? "bg-brand-lavender text-brand-brinjal"
-										: "text-muted-foreground hover:text-foreground hover:bg-brand-lavender/50"
-								)}
+								to="/"
+								className="font-inter font-extrabold text-lg sm:text-xl bg-gradient-to-r from-brand-purple to-brand-brinjal bg-clip-text text-transparent hover:opacity-80 transition-opacity"
 							>
-								{item.name}
+								ThinkBotz
 							</Link>
-						))}
-					</div>
+						</div>
 
-					{/* Mobile menu button */}
-					<div className="md:hidden flex items-center">
-						<Button
-							variant="ghost"
-							size="sm"
-							onClick={() => setIsOpen(!isOpen)}
-							className="p-2"
-						>
-							{isOpen ? (
-								<X className="h-6 w-6" />
-							) : (
-								<Menu className="h-6 w-6" />
-							)}
-						</Button>
-					</div>
-				</div>
-
-				{/* Mobile Navigation */}
-				{isOpen && (
-					<div className="md:hidden">
-						<div className="px-2 pt-2 pb-3 space-y-1 bg-background border-t border-border">
+						{/* Desktop Navigation */}
+						<div className="hidden md:flex md:items-center md:space-x-8">
 							{navigation.map((item) => (
 								<Link
 									key={item.name}
 									to={item.href}
-									onClick={() => setIsOpen(false)}
 									className={cn(
-										"block px-3 py-2 text-base font-medium rounded-lg transition-colors",
+										"px-3 py-2 text-sm font-medium rounded-lg transition-colors",
 										isActive(item.href)
 											? "bg-brand-lavender text-brand-brinjal"
 											: "text-muted-foreground hover:text-foreground hover:bg-brand-lavender/50"
@@ -88,9 +52,48 @@ export function Navbar() {
 								</Link>
 							))}
 						</div>
+
+						{/* Mobile menu button */}
+						<div className="md:hidden flex items-center">
+							<Button
+								variant="ghost"
+								size="sm"
+								onClick={() => setIsOpen(!isOpen)}
+								className="p-2"
+							>
+								{isOpen ? (
+									<X className="h-6 w-6" />
+								) : (
+									<Menu className="h-6 w-6" />
+								)}
+							</Button>
+						</div>
 					</div>
-				)}
-			</div>
+
+					{/* Mobile Navigation */}
+					{isOpen && (
+						<div className="md:hidden">
+							<div className="px-2 pt-2 pb-3 space-y-1 bg-background/50 border-t border-border">
+								{navigation.map((item) => (
+									<Link
+										key={item.name}
+										to={item.href}
+										onClick={() => setIsOpen(false)}
+										className={cn(
+											"block px-3 py-2 text-base font-medium rounded-lg transition-colors",
+											isActive(item.href)
+												? "bg-brand-lavender text-brand-brinjal"
+												: "text-muted-foreground hover:text-foreground hover:bg-brand-lavender/50"
+										)}
+									>
+										{item.name}
+									</Link>
+								))}
+							</div>
+						</div>
+					)}
+				</div>
+			</StarBorder>
 		</nav>
 	);
 }
