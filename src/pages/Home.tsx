@@ -37,6 +37,26 @@ export default function Home() {
       {/* Gallery Highlights */}
       <GallerySec />  
 
+      {/* Journey Timeline Highlight */}
+      <section className="py-20 px-4 bg-gradient-to-b from-transparent to-brand-lavender/20">
+        <div className="max-w-4xl mx-auto flex flex-col items-center text-center gap-8">
+          <div>
+            <Badge className="mb-4 bg-brand-purple text-white">Our Story</Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-brand-brinjal mb-4">
+              Explore Our Journey
+            </h2>
+            <p className="text-lg text-brand-brinjal/70 max-w-2xl mx-auto">
+              Discover the milestones, achievements, and key moments that have shaped our community. See how far we've come!
+            </p>
+          </div>
+          <Button asChild size="lg" className="bg-gradient-to-r from-brand-purple to-brand-brinjal text-white font-bold rounded-2xl shadow-lg hover:opacity-90">
+            <Link to="/timeline" className="flex items-center gap-2">
+              View Timeline
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </Button>
+        </div>
+      </section>
 
       {/* Call to Action */}
       <section className="py-20  flex justify-center items-center">

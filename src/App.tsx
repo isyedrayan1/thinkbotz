@@ -11,6 +11,7 @@ import Events from "./pages/Events";
 import EventDetail from "./pages/EventDetail";
 import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
+import Timeline from "./pages/Timeline";
 import AdminDashboard from "./pages/admin/Dashboard";
 import EventsManagement from "./pages/admin/EventsManagement";
 import NotFound from "./pages/NotFound";
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
+            <Route path="timeline" element={<Timeline />} />
             <Route path="events" element={<Events />} />
             <Route path="events/:id" element={<EventDetail />} />
             <Route path="gallery" element={<Gallery />} />

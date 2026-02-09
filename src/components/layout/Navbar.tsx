@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 const navigation = [
 	{ name: "Home", href: "/" },
 	{ name: "About", href: "/about" },
+	{ name: "Timeline", href: "/timeline" },
 	{ name: "Events", href: "/events" },
 	{ name: "Gallery", href: "/gallery" },
 	{ name: "Contact", href: "/contact" },

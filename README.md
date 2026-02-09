@@ -109,7 +109,7 @@ src/
 
 ## ✨ Credits
 
-Website created by [Syed Rayan](https://isyedrayan.online)  
+Website created by [Syed Rayan](https://isyedrayan.online) & [Syed Naseer](https://itsnaseersyed.dev)
 Technical Team – ThinkBotz
 
 ---
