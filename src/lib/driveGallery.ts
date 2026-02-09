@@ -122,3 +122,50 @@ export const fetchMultipleFolders = async (
 	);
 	return results;
 };
+
+export const hardcodedGallerySections = [
+	{
+		title: "MindSpark",
+		images: [
+			{
+				id: "1",
+				name: "Image 1",
+				thumbnailUrl: "https://example.com/mindspark-thumbnail.jpg",
+				fullUrl: "https://example.com/mindspark-full.jpg",
+			},
+		],
+	},
+	{
+		title: "PromptFusion",
+		images: [
+			{
+				id: "2",
+				name: "Image 2",
+				thumbnailUrl: "https://example.com/promptfusion-thumbnail.jpg",
+				fullUrl: "https://example.com/promptfusion-full.jpg",
+			},
+		],
+	},
+	{
+		title: "PosterVision",
+		images: [
+			{
+				id: "3",
+				name: "Image 3",
+				thumbnailUrl: "https://example.com/postervision-thumbnail.jpg",
+				fullUrl: "https://example.com/postervision-full.jpg",
+			},
+		],
+	},
+	{
+		title: "PromptStack",
+		images: [
+			{
+				id: "4",
+				name: "Image 4",
+				thumbnailUrl: "https://example.com/promptstack-thumbnail.jpg",
+				fullUrl: "https://example.com/promptstack-full.jpg",
+			},
+		],
+	},
+];

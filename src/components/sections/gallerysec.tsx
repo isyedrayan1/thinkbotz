@@ -1,9 +1,9 @@
-    import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { fetchMultipleFolders, type DriveImage } from "@/lib/driveGallery";
+import { hardcodedGallerySections, type DriveImage } from "@/lib/driveGallery";
 
 const projects = [
 	{ title: "MindSpark", folderId: import.meta.env.VITE_DRIVE_MINDSPARK_FOLDER_ID as string },
@@ -15,25 +15,16 @@ const projects = [
 ];
 
 export default function GallerySec() {
-  const [images, setImages] = useState<{img: DriveImage, projectTitle: string}[]>([]);
+  const [images, setImages] = useState<{ img: DriveImage; projectTitle: string }[]>([]);
 
   useEffect(() => {
-    const controller = new AbortController();
-    const apiKey = import.meta.env.VITE_DRIVE_API_KEY as string | undefined;
-
-    fetchMultipleFolders(apiKey ?? "", projects, controller.signal)
-      .then((sections) => {
-        const highlights: {img: DriveImage, projectTitle: string}[] = [];
-        sections.forEach(section => {
-          if (section.images.length > 0) {
-            highlights.push({ img: section.images[0], projectTitle: section.title });
-          }
-        });
-        setImages(highlights.slice(0, 4));
-      })
-      .catch(() => setImages([]));
-
-    return () => controller.abort();
+    const highlights: { img: DriveImage; projectTitle: string }[] = [];
+    hardcodedGallerySections.forEach((section) => {
+      if (section.images.length > 0) {
+        highlights.push({ img: section.images[0], projectTitle: section.title });
+      }
+    });
+    setImages(highlights.slice(0, 4));
   }, []);
 
   return (
@@ -61,7 +52,9 @@ export default function GallerySec() {
                 </div>
                 <CardContent className="p-3">
                   <h4 className="font-medium text-sm truncate">{item.projectTitle}</h4>
-                  <Badge className="text-xs mt-1" variant="secondary">{item.projectTitle}</Badge>
+                  <Badge className="text-xs mt-1" variant="secondary">
+                    {item.projectTitle}
+                  </Badge>
                 </CardContent>
               </Card>
             ))}
