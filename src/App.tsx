@@ -16,6 +16,7 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import EventsManagement from "./pages/admin/EventsManagement";
 import NotFound from "./pages/NotFound";
 import { ScrollToTop } from "./components/ScrolltoTop";
+import CertificateVerification from "./pages/CertificateVerification";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="events/:id" element={<EventDetail />} />
             <Route path="gallery" element={<Gallery />} />
             <Route path="contact" element={<Contact />} />
+            <Route path="certificate-verification" element={<CertificateVerification />} />
           </Route>
           {/* Admin Layout */}
           <Route path="/admin" element={

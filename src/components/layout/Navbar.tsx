@@ -11,6 +11,7 @@ const navigation = [
 	{ name: "Timeline", href: "/timeline" },
 	{ name: "Events", href: "/events" },
 	{ name: "Gallery", href: "/gallery" },
+	{ name: "Certificate Verification", href: "/certificate-verification" },
 	{ name: "Contact", href: "/contact" },
 ];
 

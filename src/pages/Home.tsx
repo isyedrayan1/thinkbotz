@@ -23,18 +23,72 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <HeroSection />
-    
-      {/* Brief About Section */}
+
+      {/* About Section */}
       <AboutSection />
 
       {/* Achievements & Stats */}
       <Achievements />
 
       {/* Gallery Highlights */}
-      <GallerySec />  
+      <GallerySec />
+
+      {/* Info Section: What We Offer */}
+      <section className="py-16 px-4 bg-gradient-to-b from-brand-lavender/40 to-transparent">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+          <Card className="rounded-2xl shadow-md border-brand-lavender/60 hover:shadow-lg transition-all">
+            <CardHeader className="flex flex-row items-center gap-3 pb-4">
+              <Award className="w-8 h-8 text-brand-purple" />
+              <CardTitle className="text-xl font-bold text-brand-brinjal">Skill Development</CardTitle>
+            </CardHeader>
+            <CardContent className="text-brand-brinjal/80 text-base">
+              Workshops, seminars, and hands-on sessions to boost your technical and soft skills.
+            </CardContent>
+          </Card>
+          <Card className="rounded-2xl shadow-md border-brand-lavender/60 hover:shadow-lg transition-all">
+            <CardHeader className="flex flex-row items-center gap-3 pb-4">
+              <Users className="w-8 h-8 text-brand-purple" />
+              <CardTitle className="text-xl font-bold text-brand-brinjal">Networking</CardTitle>
+            </CardHeader>
+            <CardContent className="text-brand-brinjal/80 text-base">
+              Meet like-minded peers, industry experts, and alumni to grow your professional network.
+            </CardContent>
+          </Card>
+          <Card className="rounded-2xl shadow-md border-brand-lavender/60 hover:shadow-lg transition-all">
+            <CardHeader className="flex flex-row items-center gap-3 pb-4">
+              <Trophy className="w-8 h-8 text-brand-purple" />
+              <CardTitle className="text-xl font-bold text-brand-brinjal">Recognition</CardTitle>
+            </CardHeader>
+            <CardContent className="text-brand-brinjal/80 text-base">
+              Get recognized for your achievements and contributions through awards and certificates.
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Info Section: How to Get Involved */}
+      <section className="py-16 px-4 bg-white/80 border-t border-brand-lavender/40">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-10">
+          <div className="flex-1 space-y-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-brand-brinjal mb-2">How to Get Involved</h2>
+            <ul className="list-disc pl-6 text-brand-brinjal/80 text-base space-y-2">
+              <li>Register for upcoming events and workshops.</li>
+              <li>Connect with us on social media and our community channels.</li>
+              <li>Volunteer or join our organizing team for hands-on experience.</li>
+              <li>Showcase your projects and ideas at our events.</li>
+            </ul>
+          </div>
+          <div className="flex-1 flex flex-col items-center gap-4">
+            <img src="/community.svg" alt="Community" className="w-60 h-60 object-contain" />
+            <Button asChild size="lg" className="bg-gradient-to-r from-brand-purple to-brand-brinjal text-white font-bold rounded-2xl shadow-md hover:opacity-90">
+              <Link to="/events">See Upcoming Events</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
 
       {/* Journey Timeline Highlight */}
-      <section className="py-12 md:py-20 px-4 bg-gradient-to-b from-transparent to-brand-lavender/20\">
+      <section className="py-12 md:py-20 px-4 bg-gradient-to-b from-transparent to-brand-lavender/20">
         <div className="max-w-4xl mx-auto flex flex-col items-center text-center gap-8">
           <div>
             <Badge className="mb-4 bg-brand-purple text-white">Our Story</Badge>
@@ -55,8 +109,8 @@ export default function Home() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-20  flex justify-center items-center">
-        <div className="w-full max-w-xl mx-auto bg-white/90 rounded-3xl  px-8 py-12 flex flex-col items-center gap-6 border border-brand-lavender">
+      <section className="py-20 flex justify-center items-center">
+        <div className="w-full max-w-xl mx-auto bg-white/90 rounded-3xl px-8 py-12 flex flex-col items-center gap-6 border border-brand-lavender">
           <h2 className="text-3xl md:text-4xl font-extrabold text-brand-brinjal text-center">
             Ready to Join Our Community?
           </h2>
