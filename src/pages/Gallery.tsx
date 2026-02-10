@@ -43,7 +43,7 @@ export default function Gallery() {
 	const selectedImage = selectedIndex !== null ? flatImages[selectedIndex] : null;
 
 	return (
-		<div className="min-h-screen py-8 md:py-16 pt-20 md:pt-28 pb-16 md:pb-20 bg-background">
+		<div className="min-h-screen pt-28 md:pt-28 pb-16 md:pb-20 bg-background">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				{/* Header */}
 				<div className="text-center mb-10 md:mb-16">

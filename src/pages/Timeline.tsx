@@ -37,14 +37,14 @@ const TimelineComponent = ({ data }: { data: TimelineEntry[] }) => {
 
   return (
     <div
-      className="w-full bg-white dark:bg-neutral-950 font-sans"
+      className="w-full bg-white dark:bg-neutral-950 font-sans mt-32"
       ref={containerRef}
     >
-      {/* Full Viewport Hero Section */}
-      <div className="relative w-full h-screen flex items-center justify-center px-4 md:px-10 pt-16 md:pt-20 lg:pt-24">
+      {/* Hero Section */}
+      <div className="relative w-full flex items-center justify-center px-4 md:px-10 pt-16 md:pt-20 lg:pt-24">
         <div className="text-center max-w-5xl mx-auto">
           <motion.h2
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-brand-purple to-brand-brinjal bg-clip-text text-transparent mb-6 leading-tight"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -52,12 +52,12 @@ const TimelineComponent = ({ data }: { data: TimelineEntry[] }) => {
             Our Journey Timeline
           </motion.h2>
           <motion.p
-            className="text-lg md:text-2xl text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto"
+            className="text-base md:text-lg max-w-3xl mx-auto mb-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Follow our milestone achievements and major events that shaped our success.
+            Explore the milestones and achievements that define our story. From humble beginnings to impactful events, see how we’ve grown together.
           </motion.p>
         </div>
       </div>
@@ -67,7 +67,7 @@ const TimelineComponent = ({ data }: { data: TimelineEntry[] }) => {
         {data.map((item, index) => (
           <div
             key={index}
-            className="flex justify-start pt-10 md:pt-96 md:gap-10 min-h-screen md:min-h-auto"
+            className="flex justify-start pt-10 md:pt-96 md:gap-10 min-h-screen pt-28 md:pt-28 pb-16 md:pb-20"
           >
             {/* Left: Sticky Year/Title Container */}
             <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">

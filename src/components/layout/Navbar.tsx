@@ -26,7 +26,12 @@ export function Navbar() {
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="flex justify-between h-16">
 						{/* Logo and Brand */}
-						<div className="flex items-center space-x-3">
+						<div className="flex items-center space-x-2 sm:space-x-3">
+							<img 
+								src="/logo.png" 
+								alt="ThinkBotz Logo" 
+								className="h-8 sm:h-10 w-8 sm:w-10 object-contain bg-white rounded"
+							/>
 							<Link
 								to="/"
 								className="font-inter font-extrabold text-lg sm:text-xl bg-gradient-to-r from-brand-purple to-brand-brinjal bg-clip-text text-transparent hover:opacity-80 transition-opacity"

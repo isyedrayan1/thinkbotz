@@ -40,3 +40,33 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Define a CSS variable for the navbar height */
+:root {
+  --navbar-height: 4rem; /* Adjust this value based on your navbar height */
+}
+
+@media (max-width: 640px) {
+  :root {
+    --navbar-height: 8.4rem;
+  }
+  body {
+    padding-top: var(--navbar-height);
+  }
+}
+
+body {
+  padding-top: var(--navbar-height);
+}
+
+/* Ensure sections have consistent spacing */
+section {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+@media (max-width: 640px) {
+  body {
+    padding-top: 5rem;
+  }
+}
