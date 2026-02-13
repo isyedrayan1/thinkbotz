@@ -4,8 +4,11 @@ import {
   useScroll,
   useTransform,
   motion,
+  AnimatePresence,
 } from "framer-motion";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { fetchMultipleFolders, type DriveGallerySection } from "@/lib/driveGallery";
+import { ChevronLeft, ChevronRight, Pause, Play, X } from "lucide-react";
 
 interface TimelineEntry {
   date: string;
@@ -13,12 +16,19 @@ interface TimelineEntry {
   title: string;
   description: string;
   media: string[];
+  galleryKey?: string;
 }
 
 const TimelineComponent = ({ data }: { data: TimelineEntry[] }) => {
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
+  const [preview, setPreview] = useState<{
+    title: string;
+    media: string[];
+    index: number;
+  } | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     if (ref.current) {
@@ -34,6 +44,60 @@ const TimelineComponent = ({ data }: { data: TimelineEntry[] }) => {
 
   const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
   const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
+
+  useEffect(() => {
+    if (!preview) {
+      setIsPlaying(false);
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setPreview(null);
+        setIsPlaying(false);
+        return;
+      }
+
+      if (event.code === "Space") {
+        event.preventDefault();
+        setIsPlaying((prev) => !prev);
+        return;
+      }
+
+      if (event.key === "ArrowRight") {
+        setPreview((prev) => {
+          if (!prev || prev.media.length === 0) return prev;
+          return { ...prev, index: (prev.index + 1) % prev.media.length };
+        });
+      }
+
+      if (event.key === "ArrowLeft") {
+        setPreview((prev) => {
+          if (!prev || prev.media.length === 0) return prev;
+          return {
+            ...prev,
+            index: (prev.index - 1 + prev.media.length) % prev.media.length,
+          };
+        });
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [preview]);
+
+  useEffect(() => {
+    if (!preview || !isPlaying) return;
+
+    const intervalId = window.setInterval(() => {
+      setPreview((prev) => {
+        if (!prev || prev.media.length === 0) return prev;
+        return { ...prev, index: (prev.index + 1) % prev.media.length };
+      });
+    }, 2200);
+
+    return () => window.clearInterval(intervalId);
+  }, [isPlaying, preview]);
 
   return (
     <div
@@ -74,26 +138,30 @@ const TimelineComponent = ({ data }: { data: TimelineEntry[] }) => {
               <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-white dark:bg-black flex items-center justify-center">
                 <div className="h-4 w-4 rounded-full bg-neutral-200 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 p-2" />
               </div>
-              <div className="hidden md:flex md:flex-col md:pl-20 items-start">
-                <h3 className="text-xl md:text-4xl font-bold text-neutral-500 dark:text-neutral-500">
-                  {item.date}
-                </h3>
-                <p className="text-sm md:text-lg text-neutral-400 dark:text-neutral-600 font-semibold">
-                  {item.fullYear}
-                </p>
-              </div>
+              {item.date ? (
+                <div className="hidden md:flex md:flex-col md:pl-20 items-start">
+                  <h3 className="text-xl md:text-4xl font-bold text-neutral-500 dark:text-neutral-500">
+                    {item.date}
+                  </h3>
+                  <p className="text-sm md:text-lg text-neutral-400 dark:text-neutral-600 font-semibold">
+                    {item.fullYear}
+                  </p>
+                </div>
+              ) : null}
             </div>
 
             {/* Right: Content and Media Container */}
             <div className="relative pl-20 pr-4 md:pl-4 w-full">
-              <div className="md:hidden block mb-4">
-                <h3 className="text-2xl font-bold text-neutral-500 dark:text-neutral-500">
-                  {item.date}
-                </h3>
-                <p className="text-sm text-neutral-400 dark:text-neutral-600 font-semibold">
-                  {item.fullYear}
-                </p>
-              </div>
+              {item.date ? (
+                <div className="md:hidden block mb-4">
+                  <h3 className="text-2xl font-bold text-neutral-500 dark:text-neutral-500">
+                    {item.date}
+                  </h3>
+                  <p className="text-sm text-neutral-400 dark:text-neutral-600 font-semibold">
+                    {item.fullYear}
+                  </p>
+                </div>
+              ) : null}
 
               {/* Content Section */}
               <div className="mb-8">
@@ -112,11 +180,15 @@ const TimelineComponent = ({ data }: { data: TimelineEntry[] }) => {
                     key={mediaIndex}
                     src={mediaUrl}
                     alt={`${item.title} - ${mediaIndex + 1}`}
-                    className="w-full h-48 md:h-64 rounded-xl object-cover shadow-md border border-neutral-200 dark:border-neutral-800 hover:shadow-lg transition-shadow duration-300"
+                    className="w-full h-48 md:h-64 rounded-xl object-cover shadow-md border border-neutral-200 dark:border-neutral-800 hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5, delay: mediaIndex * 0.1 }}
                     viewport={{ once: false, amount: 0.3 }}
+                    onClick={() => {
+                      setPreview({ title: item.title, media: item.media, index: mediaIndex });
+                      setIsPlaying(false);
+                    }}
                   />
                 ))}
               </div>
@@ -138,16 +210,124 @@ const TimelineComponent = ({ data }: { data: TimelineEntry[] }) => {
           />
         </div>
       </div>
+
+      {preview ? (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4"
+          role="dialog"
+          aria-modal="true"
+          onClick={() => {
+            setPreview(null);
+            setIsPlaying(false);
+          }}
+        >
+          <div
+            className="relative w-full max-w-6xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="flex items-center justify-between text-white mb-4">
+              <div className="text-sm md:text-base font-semibold">
+                {preview.title}
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center rounded-full border border-white/30 w-10 h-10 hover:bg-white/10 transition"
+                  onClick={() => setIsPlaying((prev) => !prev)}
+                  aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
+                >
+                  {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+                </button>
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center rounded-full border border-white/30 w-10 h-10 hover:bg-white/10 transition"
+                  onClick={() => {
+                    setPreview(null);
+                    setIsPlaying(false);
+                  }}
+                  aria-label="Close preview"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+
+            <div className="relative w-full bg-black/40 rounded-2xl overflow-hidden">
+              <button
+                type="button"
+                className="absolute left-3 top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center rounded-full border border-white/30 w-10 h-10 text-white hover:bg-white/10 transition"
+                onClick={() =>
+                  setPreview((prev) => {
+                    if (!prev || prev.media.length === 0) return prev;
+                    return {
+                      ...prev,
+                      index: (prev.index - 1 + prev.media.length) % prev.media.length,
+                    };
+                  })
+                }
+                aria-label="Previous image"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <button
+                type="button"
+                className="absolute right-3 top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center rounded-full border border-white/30 w-10 h-10 text-white hover:bg-white/10 transition"
+                onClick={() =>
+                  setPreview((prev) => {
+                    if (!prev || prev.media.length === 0) return prev;
+                    return { ...prev, index: (prev.index + 1) % prev.media.length };
+                  })
+                }
+                aria-label="Next image"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={preview.index}
+                  src={preview.media[preview.index]}
+                  alt={`${preview.title} - ${preview.index + 1}`}
+                  className="w-full max-h-[75vh] object-contain bg-black"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.45, ease: "easeOut" }}
+                />
+              </AnimatePresence>
+            </div>
+
+            <div className="text-white/70 text-xs md:text-sm mt-3 text-center">
+              {preview.index + 1} / {preview.media.length}
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };
 
 const timelineData: TimelineEntry[] = [
   {
+    date: "",
+    fullYear: "",
+    title: "Inauguration Event",
+    description: "Marked the beginning of ThinkBotz with an inspiring inauguration that brought students and faculty together to kick off our journey.",
+    media: [
+      "https://drive.google.com/thumbnail?id=1EMjRrIZYbhyBH_LWualM0cbPRL8rE8nM&sz=w1200",
+      "https://drive.google.com/thumbnail?id=17Vq0DcRJLPfcG3Ixq43RvlI2lCTUEE-H&sz=w1200",
+      "https://drive.google.com/thumbnail?id=17bJmBuynyk7cDa5CCsI0vns_iUJ-yz4A&sz=w1200",
+      "https://drive.google.com/thumbnail?id=1H_Tp264cCutvJvkGF33P2S_PvCjD1Yf1&sz=w1200",
+      "https://drive.google.com/thumbnail?id=1d3MCbGycf7oT5ScCRqkXLqhMi6Fnif1G&sz=w1200",
+      "https://drive.google.com/thumbnail?id=10qnhHVpRKOgwDlJhXdIvpffnncvk2ZSJ&sz=w1200",
+    ],
+  },
+  {
     date: "Sep 11",
     fullYear: "2025",
     title: "MindSpark Quiz",
     description: "Launched our first major event - a technical quiz competition testing logical reasoning, problem-solving skills, and fundamental programming knowledge. Participants competed in multiple rounds covering Logical Reasoning, C, Python, Java, and core technical concepts.",
+    galleryKey: "MindSpark",
     media: [
       "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
       "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=400&fit=crop",
@@ -158,6 +338,7 @@ const timelineData: TimelineEntry[] = [
     fullYear: "2025",
     title: "Prompt Fusion Event",
     description: "Explored AI creativity with our second event where students demonstrated AI-powered prompt generation, image creation, and video generation skills. Participants challenged themselves with creative prompts and innovative AI-powered tasks.",
+    galleryKey: "PromptFusion",
     media: [
       "https://images.unsplash.com/photo-1512941691920-25bda36dc643?w=600&h=400&fit=crop",
       "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=400&fit=crop",
@@ -169,6 +350,7 @@ const timelineData: TimelineEntry[] = [
     fullYear: "2025",
     title: "Poster Vision",
     description: "Showcased student creativity through poster presentation competition. Students demonstrated innovative ideas and technical knowledge through visually engaging posters, enhancing presentation skills and creative thinking.",
+    galleryKey: "PosterVision",
     media: [
       "https://images.unsplash.com/photo-1677442d019cecf8978f1e0b6d34be7f8c3b4d9f?w=600&h=400&fit=crop",
       "https://images.unsplash.com/photo-1512941691920-25bda36dc643?w=600&h=400&fit=crop",
@@ -179,6 +361,7 @@ const timelineData: TimelineEntry[] = [
     fullYear: "2025",
     title: "Smart Stack",
     description: "Conducted an AI Tools Show & Tell event where students demonstrated and discussed various AI tools in an interactive format. Participants showcased technical knowledge, creativity, and practical understanding of cutting-edge AI technologies.",
+    galleryKey: "PromptStack",
     media: [
       "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
       "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=400&fit=crop",
@@ -191,28 +374,56 @@ const timelineData: TimelineEntry[] = [
     fullYear: "2026",
     title: "FFSAL eSports League",
     description: "Organized the Free Fire Student Association League gaming competition showcasing strategic thinking, teamwork, and competitive gameplay. Participants demonstrated coordination, tactical planning, and decision-making skills.",
+    galleryKey: "FFSAL",
     media: [
       "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
       "https://images.unsplash.com/photo-1512941691920-25bda36dc643?w=600&h=400&fit=crop",
     ],
   },
-  {
-    date: "Feb",
-    fullYear: "2026",
-    title: "Continuous Growth",
-    description: "ThinkBotz Student Association continues to grow with more exciting events, workshops, and competitions. Building a vibrant community of AI & ML enthusiasts and fostering innovation across the department.",
-    media: [
-      "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1677442d019cecf8978f1e0b6d34be7f8c3b4d9f?w=600&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
-    ],
-  },
 ];
 
 export default function Timeline() {
+  const [sections, setSections] = useState<DriveGallerySection[]>([]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const apiKey = import.meta.env.VITE_DRIVE_API_KEY as string | undefined;
+
+    const projects = [
+      { title: "MindSpark", folderId: import.meta.env.VITE_DRIVE_MINDSPARK_FOLDER_ID as string },
+      { title: "PromptFusion", folderId: import.meta.env.VITE_DRIVE_PROMPTFUSION_FOLDER_ID as string },
+      { title: "PosterVision", folderId: import.meta.env.VITE_DRIVE_POSTERVISION_FOLDER_ID as string },
+      { title: "PromptStack", folderId: import.meta.env.VITE_DRIVE_PROMPTSTACK_FOLDER_ID as string },
+      { title: "FFSAL", folderId: import.meta.env.VITE_DRIVE_FFSAL_FOLDER_ID as string },
+      { title: "Inauguration Event", folderId: import.meta.env.VITE_DRIVE_INAUGURATION_FOLDER_ID as string },
+    ];
+
+    fetchMultipleFolders(apiKey ?? "", projects, controller.signal)
+      .then((items) => setSections(items))
+      .catch((err) => console.error(err));
+
+    return () => controller.abort();
+  }, []);
+
+  const resolvedTimelineData = useMemo(() => {
+    if (sections.length === 0) return timelineData;
+
+    return timelineData.map((item) => {
+      if (!item.galleryKey) return item;
+
+      const section = sections.find((entry) => entry.title === item.galleryKey);
+      const media = section?.images.slice(0, 6).map((img) => img.thumbnailUrl) ?? [];
+
+      return {
+        ...item,
+        media: media.length > 0 ? media : item.media,
+      };
+    });
+  }, [sections]);
+
   return (
     <div className="bg-white dark:bg-neutral-950">
-      <TimelineComponent data={timelineData} />
+      <TimelineComponent data={resolvedTimelineData} />
     </div>
   );
 }

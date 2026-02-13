@@ -11,7 +11,7 @@ const navigation = [
 	{ name: "Timeline", href: "/timeline" },
 	{ name: "Events", href: "/events" },
 	{ name: "Gallery", href: "/gallery" },
-	{ name: "Certificate Verification", href: "/certificate-verification" },
+	{ name: "Certificate Verification", href: "https://certify-buddy.vercel.app/verify", external: true },
 	{ name: "Contact", href: "/contact" },
 ];
 
@@ -44,18 +44,34 @@ export function Navbar() {
 						{/* Desktop Navigation */}
 						<div className="hidden md:flex md:items-center md:space-x-8">
 							{navigation.map((item) => (
-								<Link
-									key={item.name}
-									to={item.href}
-									className={cn(
-										"px-3 py-2 text-sm font-medium rounded-lg transition-colors",
-										isActive(item.href)
-											? "bg-brand-lavender text-brand-brinjal"
-											: "text-muted-foreground hover:text-foreground hover:bg-brand-lavender/50"
-									)}
-								>
-									{item.name}
-								</Link>
+								item.external ? (
+									<a
+										key={item.name}
+										href={item.href}
+										className={cn(
+											"px-3 py-2 text-sm font-medium rounded-lg transition-colors",
+											isActive(item.href)
+												? "bg-brand-lavender text-brand-brinjal"
+												: "text-muted-foreground hover:text-foreground hover:bg-brand-lavender/50"
+										)}
+										rel="noopener noreferrer"
+									>
+										{item.name}
+									</a>
+								) : (
+									<Link
+										key={item.name}
+										to={item.href}
+										className={cn(
+											"px-3 py-2 text-sm font-medium rounded-lg transition-colors",
+											isActive(item.href)
+												? "bg-brand-lavender text-brand-brinjal"
+												: "text-muted-foreground hover:text-foreground hover:bg-brand-lavender/50"
+										)}
+									>
+										{item.name}
+									</Link>
+								)
 							))}
 						</div>
 
@@ -77,27 +93,44 @@ export function Navbar() {
 					</div>
 
 					{/* Mobile Navigation */}
-					{isOpen && (
-						<div className="md:hidden">
-							<div className="px-2 pt-2 pb-3 space-y-1 bg-background/50 border-t border-border">
-								{navigation.map((item) => (
-									<Link
-										key={item.name}
-										to={item.href}
-										onClick={() => setIsOpen(false)}
-										className={cn(
-											"block px-3 py-2 text-base font-medium rounded-lg transition-colors",
-											isActive(item.href)
-												? "bg-brand-lavender text-brand-brinjal"
-												: "text-muted-foreground hover:text-foreground hover:bg-brand-lavender/50"
-										)}
-									>
-										{item.name}
-									</Link>
-								))}
+						{isOpen && (
+							<div className="md:hidden">
+								<div className="px-2 pt-2 pb-3 space-y-1 bg-background/50 border-t border-border">
+									{navigation.map((item) => (
+										item.external ? (
+											<a
+												key={item.name}
+												href={item.href}
+												className={cn(
+													"block px-3 py-2 text-base font-medium rounded-lg transition-colors",
+													isActive(item.href)
+														? "bg-brand-lavender text-brand-brinjal"
+														: "text-muted-foreground hover:text-foreground hover:bg-brand-lavender/50"
+												)}
+												rel="noopener noreferrer"
+												onClick={() => setIsOpen(false)}
+											>
+												{item.name}
+											</a>
+										) : (
+											<Link
+												key={item.name}
+												to={item.href}
+												onClick={() => setIsOpen(false)}
+												className={cn(
+													"block px-3 py-2 text-base font-medium rounded-lg transition-colors",
+													isActive(item.href)
+														? "bg-brand-lavender text-brand-brinjal"
+														: "text-muted-foreground hover:text-foreground hover:bg-brand-lavender/50"
+												)}
+											>
+												{item.name}
+											</Link>
+										)
+									))}
+								</div>
 							</div>
-						</div>
-					)}
+						)}
 				</div>
 			</StarBorder>
 		</nav>
