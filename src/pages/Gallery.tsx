@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { fetchMultipleFolders, type DriveGallerySection, type DriveImage } from "@/lib/driveGallery";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Play, Pause, X, ChevronLeft, ChevronRight, Presentation } from "lucide-react";
 
 const tags = ["All", "MindSpark", "PromptFusion", "PosterVision", "PromptStack", "FFSAL", "Inauguration Event"];
 
@@ -9,6 +12,9 @@ export default function Gallery() {
 	const [sections, setSections] = useState<DriveGallerySection[]>([]);
 	const [selectedTag, setSelectedTag] = useState("All");
 	const [isLoading, setIsLoading] = useState(true);
+	const [slideshowMode, setSlideshowMode] = useState(false);
+	const [slideshowIndex, setSlideshowIndex] = useState(0);
+	const [isPlaying, setIsPlaying] = useState(true);
 
 	useEffect(() => {
 		const controller = new AbortController();
@@ -42,6 +48,53 @@ export default function Gallery() {
 	);
 	const selectedImage = selectedIndex !== null ? flatImages[selectedIndex] : null;
 
+	// Auto-play slideshow timer
+	useEffect(() => {
+		if (!slideshowMode || !isPlaying || flatImages.length === 0) return;
+
+		const timer = setInterval(() => {
+			setSlideshowIndex((prev) => (prev + 1) % flatImages.length);
+		}, 3000); // Change image every 3 seconds
+
+		return () => clearInterval(timer);
+	}, [slideshowMode, isPlaying, flatImages.length]);
+
+	// Keyboard navigation for slideshow
+	useEffect(() => {
+		if (!slideshowMode) return;
+
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Escape") {
+				setSlideshowMode(false);
+			} else if (e.key === "ArrowRight") {
+				setSlideshowIndex((prev) => (prev + 1) % flatImages.length);
+			} else if (e.key === "ArrowLeft") {
+				setSlideshowIndex((prev) => (prev - 1 + flatImages.length) % flatImages.length);
+			} else if (e.key === " ") {
+				e.preventDefault();
+				setIsPlaying((prev) => !prev);
+			}
+		};
+
+		window.addEventListener("keydown", handleKeyDown);
+		return () => window.removeEventListener("keydown", handleKeyDown);
+	}, [slideshowMode, flatImages.length]);
+
+	const handleStartSlideshow = () => {
+		if (flatImages.length === 0) return;
+		setSlideshowIndex(0);
+		setIsPlaying(true);
+		setSlideshowMode(true);
+	};
+
+	const handleNextSlide = () => {
+		setSlideshowIndex((prev) => (prev + 1) % flatImages.length);
+	};
+
+	const handlePrevSlide = () => {
+		setSlideshowIndex((prev) => (prev - 1 + flatImages.length) % flatImages.length);
+	};
+
 	return (
 		<div className="min-h-screen pt-28 md:pt-28 pb-16 md:pb-20 bg-background">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -50,9 +103,18 @@ export default function Gallery() {
 					<h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 md:mb-4">
 						Gallery
 					</h1>
-					<p className="text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto">
+					<p className="text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
 						Explore projects and events from our amazing teams.
 					</p>
+					{flatImages.length > 0 && (
+						<Button
+							onClick={handleStartSlideshow}
+							className="bg-brand-brinjal hover:bg-brand-purple text-white"
+						>
+							<Presentation className="w-4 h-4 mr-2" />
+							Start Slideshow
+						</Button>
+					)}
 				</div>
 
 				{/* Tags Filter - Desktop Buttons */}
@@ -140,6 +202,77 @@ export default function Gallery() {
 						</p>
 					</div>
 				)}
+
+				{/* Fullscreen Slideshow Modal */}
+				<Dialog open={slideshowMode} onOpenChange={setSlideshowMode}>
+					<DialogContent className="max-w-full w-screen h-screen p-0 bg-black/95 border-0">
+						<div className="relative w-full h-full flex items-center justify-center">
+							{/* Close Button */}
+							<button
+								onClick={() => setSlideshowMode(false)}
+								className="absolute top-4 right-4 z-50 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+								aria-label="Close slideshow"
+							>
+								<X className="w-6 h-6 text-white" />
+							</button>
+
+							{/* Play/Pause Button */}
+							<button
+								onClick={() => setIsPlaying(!isPlaying)}
+								className="absolute top-4 right-16 z-50 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+								aria-label={isPlaying ? "Pause" : "Play"}
+							>
+								{isPlaying ? (
+									<Pause className="w-6 h-6 text-white" />
+								) : (
+									<Play className="w-6 h-6 text-white" />
+								)}
+							</button>
+
+							{/* Previous Button */}
+							<button
+								onClick={handlePrevSlide}
+								className="absolute left-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+								aria-label="Previous image"
+							>
+								<ChevronLeft className="w-8 h-8 text-white" />
+							</button>
+
+							{/* Next Button */}
+							<button
+								onClick={handleNextSlide}
+								className="absolute right-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+								aria-label="Next image"
+							>
+								<ChevronRight className="w-8 h-8 text-white" />
+							</button>
+
+							{/* Image and Info */}
+							{flatImages[slideshowIndex] && (
+								<div className="relative w-full h-full flex flex-col items-center justify-center">
+									{/* Image */}
+									<div className="relative max-w-7xl max-h-[85vh] w-full h-full flex items-center justify-center px-20 py-16">
+										<img
+											src={flatImages[slideshowIndex].img.thumbnailUrl.replace('=s220', '=s2048')}
+											alt={`${flatImages[slideshowIndex].sectionTitle} image`}
+											className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+										/>
+									</div>
+
+									{/* Event Name Overlay */}
+									<div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-black/70 backdrop-blur-sm px-6 py-3 rounded-full">
+										<h3 className="text-white text-lg md:text-xl font-semibold">
+											{flatImages[slideshowIndex].sectionTitle}
+										</h3>
+										<p className="text-white/80 text-sm text-center mt-1">
+											{slideshowIndex + 1} / {flatImages.length}
+										</p>
+									</div>
+								</div>
+							)}
+						</div>
+					</DialogContent>
+				</Dialog>
 			</div>
 		</div>
 	);
