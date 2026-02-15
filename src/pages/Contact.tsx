@@ -228,12 +228,12 @@ export default function Contact() {
               </div>
               <div>
                 <div className="font-semibold text-brand-brinjal">Technical Team Contact</div>
-                <div className="text-sm text-muted-foreground">Syed Rayan</div>
+                <div className="text-sm text-muted-foreground">Galat Family</div>
                 <a
-                  href="mailto:mesyedrn@gmail.com"
+                  href="mailto:galatfamily@gmail.com"
                   className="text-sm text-brand-brinjal underline"
                 >
-                  mesyedrn@gmail.com
+                  galatfamily@gmail.com
                 </a>
               </div>
             </div>

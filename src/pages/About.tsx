@@ -7,7 +7,7 @@ import { Users, Link as LinkIcon, Target, Eye, MapPin, Mail } from "lucide-react
 const hierarchyMembers = [
     // HOD
     {
-        name: "Dr. Shaik Parveen",
+        name: "Dr. O. Homa Kesav",
         level: "hod",
         year: "",
         link: { enabled: false, url: "" },
@@ -36,7 +36,7 @@ const hierarchyMembers = [
     // Technical Team
     { name: "S. Abdul Aleem", level: "technical", year: "4th Year", link: { enabled: false, url: "https://github.com/snr9" } },
     { name: "Syed Rayan", level: "technical", year: "3rd Year", link: { enabled: true, url: "https://isyedrayan.online" } },
-    { name: "Syed Naseer", level: "technical", year: "3rd Year", link: { enabled: true, url: "https://github.com/snr9" } },
+    { name: "Syed Naseer", level: "technical", year: "3rd Year", link: { enabled: true, url: "https://itsnaseersyed.dev" } },
     { name: "Shaik Shahul", level: "technical", year: "3rd Year", link: { enabled: true, url: "https://github.com/snr9" } },
     { name: "S. Aneeqa Thamreen", level: "technical", year: "4th Year", link: { enabled: false, url: "https://github.com/snr9" } },
     // Media Team
@@ -266,7 +266,7 @@ export default function About() {
                             </div>
                             <h3 className="font-semibold">Email Us</h3>
                             <a
-                                href="mailto:isyedrayan.online@gmail.com"
+                                href="mailto:galatfamily@gmail.com"
                                 className="text-brand-brinjal underline"
                             >
                                 thinkbotz@gmail.com
@@ -281,10 +281,10 @@ export default function About() {
                             <p className="text-sm text-muted-foreground">
                                 Having trouble or need Tech support:<br />
                                 <a
-                                    href="mailto:isyedrayan.online@gmail.com"
+                                    href="mailto:galatfamily@gmail.com"
                                     className="text-brand-brinjal underline"
                                 >
-                                    mesyedrn@gmail.com
+                                    galatfamily@gmail.com
                                 </a>
                             </p>
                         </div>
