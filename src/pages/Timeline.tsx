@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { fetchMultipleFolders, type DriveGallerySection } from "@/lib/driveGallery";
 import { ChevronLeft, ChevronRight, Pause, Play, X } from "lucide-react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 interface TimelineEntry {
   date: string;
@@ -27,6 +28,7 @@ const TimelineComponent = ({ data }: { data: TimelineEntry[] }) => {
     title: string;
     media: string[];
     index: number;
+    description?: string;
   } | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -165,10 +167,24 @@ const TimelineComponent = ({ data }: { data: TimelineEntry[] }) => {
 
               {/* Content Section */}
               <div className="mb-8">
-                <h3 className="text-2xl md:text-3xl font-semibold text-neutral-800 dark:text-neutral-200 mb-3">
-                  {item.title}
-                </h3>
-                <p className="text-neutral-700 dark:text-neutral-300 text-base md:text-lg leading-relaxed">
+                <div className="flex items-center justify-between gap-4">
+                  <h3 className="text-2xl md:text-3xl font-semibold text-neutral-800 dark:text-neutral-200">
+                    {item.title}
+                  </h3>
+                  {item.media.length > 0 && (
+                    <button
+                      onClick={() => {
+                        setPreview({ title: item.title, media: item.media, index: 0, description: item.description });
+                        setIsPlaying(true);
+                      }}
+                      className="flex-shrink-0 p-2 rounded-full bg-brand-brinjal/10 hover:bg-brand-brinjal/20 transition-all duration-300 border border-brand-brinjal/30 hover:border-brand-brinjal/50"
+                      aria-label="Start slideshow"
+                    >
+                      <Play className="w-6 h-6 text-brand-brinjal" />
+                    </button>
+                  )}
+                </div>
+                <p className="text-neutral-700 dark:text-neutral-300 text-base md:text-lg leading-relaxed mt-3">
                   {item.description}
                 </p>
               </div>
@@ -186,7 +202,7 @@ const TimelineComponent = ({ data }: { data: TimelineEntry[] }) => {
                     transition={{ duration: 0.5, delay: mediaIndex * 0.1 }}
                     viewport={{ once: false, amount: 0.3 }}
                     onClick={() => {
-                      setPreview({ title: item.title, media: item.media, index: mediaIndex });
+                      setPreview({ title: item.title, media: item.media, index: mediaIndex, description: item.description });
                       setIsPlaying(false);
                     }}
                   />
@@ -212,96 +228,82 @@ const TimelineComponent = ({ data }: { data: TimelineEntry[] }) => {
       </div>
 
       {preview ? (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4"
-          role="dialog"
-          aria-modal="true"
-          onClick={() => {
-            setPreview(null);
-            setIsPlaying(false);
-          }}
-        >
-          <div
-            className="relative w-full max-w-6xl"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="flex items-center justify-between text-white mb-4">
-              <div className="text-sm md:text-base font-semibold">
-                {preview.title}
+        <Dialog open={!!preview} onOpenChange={() => setPreview(null)}>
+          <DialogContent className="max-w-full w-screen h-screen p-0 border-0 m-0">
+            {/* Gradient Background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-brand-lavender via-white to-brand-lavender" />
+            
+            {/* Content Container - Full Viewport */}
+            <div className="relative w-screen h-screen flex flex-col items-center justify-center overflow-hidden">
+              {/* Header */}
+              <div className="w-full text-center px-8 pt-8">
+                <h1 className="text-3xl md:text-4xl font-bold text-brand-brinjal mb-2">
+                  THINKBOTZ STUDENT ASSOCIATION
+                </h1>
+                <p className="text-brand-brinjal/70 text-sm md:text-base font-semibold">
+                  Dept. of CSE(AI & ML)
+                </p>
               </div>
-              <div className="flex items-center gap-2">
+
+              {/* Large Image in Middle - Takes up remaining space */}
+              <div className="flex-grow flex items-center justify-center w-full px-8 py-4 max-h-[60vh]">
+                <div className="relative w-full h-full flex items-center justify-center">
+                  <div className="absolute inset-0 bg-gradient-to-r from-brand-purple/5 to-brand-brinjal/5 rounded-2xl blur-3xl" />
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={preview.index}
+                      src={preview.media[preview.index]}
+                      alt={`${preview.title} - ${preview.index + 1}`}
+                      className="relative max-w-full max-h-full object-contain rounded-2xl shadow-2xl"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.45, ease: "easeOut" }}
+                    />
+                  </AnimatePresence>
+                </div>
+              </div>
+
+              {/* Event Name at Bottom */}
+              <div className="w-full text-center px-8 pb-8">
+                <h2 className="text-3xl md:text-4xl font-bold text-brand-brinjal mb-2">
+                  {preview.title}
+                </h2>
+                <p className="text-brand-brinjal/70 text-sm">
+                  {preview.index + 1} / {preview.media.length}
+                </p>
+              </div>
+
+              {/* Control Buttons */}
+              <div className="absolute top-6 right-6 z-50 flex gap-3">
+                {/* Play/Pause Button */}
                 <button
-                  type="button"
-                  className="inline-flex items-center justify-center rounded-full border border-white/30 w-10 h-10 hover:bg-white/10 transition"
-                  onClick={() => setIsPlaying((prev) => !prev)}
-                  aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
+                  onClick={() => setIsPlaying(!isPlaying)}
+                  className="p-3 rounded-full bg-brand-brinjal/10 hover:bg-brand-brinjal/20 transition-all duration-300 border border-brand-brinjal/30 hover:border-brand-brinjal/50"
+                  aria-label={isPlaying ? "Pause" : "Play"}
                 >
-                  {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+                  {isPlaying ? (
+                    <Pause className="w-5 h-5 text-brand-brinjal" />
+                  ) : (
+                    <Play className="w-5 h-5 text-brand-brinjal" />
+                  )}
                 </button>
+
+                {/* Close Button */}
                 <button
-                  type="button"
-                  className="inline-flex items-center justify-center rounded-full border border-white/30 w-10 h-10 hover:bg-white/10 transition"
                   onClick={() => {
                     setPreview(null);
                     setIsPlaying(false);
                   }}
-                  aria-label="Close preview"
+                  className="p-3 rounded-full bg-brand-brinjal/10 hover:bg-brand-brinjal/20 transition-all duration-300 border border-brand-brinjal/30 hover:border-brand-brinjal/50"
+                  aria-label="Close slideshow"
                 >
-                  <X className="h-5 w-5" />
+                  <X className="w-5 h-5 text-brand-brinjal" />
                 </button>
               </div>
             </div>
-
-            <div className="relative w-full bg-black/40 rounded-2xl overflow-hidden">
-              <button
-                type="button"
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center rounded-full border border-white/30 w-10 h-10 text-white hover:bg-white/10 transition"
-                onClick={() =>
-                  setPreview((prev) => {
-                    if (!prev || prev.media.length === 0) return prev;
-                    return {
-                      ...prev,
-                      index: (prev.index - 1 + prev.media.length) % prev.media.length,
-                    };
-                  })
-                }
-                aria-label="Previous image"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-              <button
-                type="button"
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center rounded-full border border-white/30 w-10 h-10 text-white hover:bg-white/10 transition"
-                onClick={() =>
-                  setPreview((prev) => {
-                    if (!prev || prev.media.length === 0) return prev;
-                    return { ...prev, index: (prev.index + 1) % prev.media.length };
-                  })
-                }
-                aria-label="Next image"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </button>
-
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={preview.index}
-                  src={preview.media[preview.index]}
-                  alt={`${preview.title} - ${preview.index + 1}`}
-                  className="w-full max-h-[75vh] object-contain bg-black"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.45, ease: "easeOut" }}
-                />
-              </AnimatePresence>
-            </div>
-
-            <div className="text-white/70 text-xs md:text-sm mt-3 text-center">
-              {preview.index + 1} / {preview.media.length}
-            </div>
-          </div>
-        </div>
+          </DialogContent>
+        </Dialog>
       ) : null}
     </div>
   );
