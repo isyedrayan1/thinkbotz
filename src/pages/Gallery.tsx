@@ -3,9 +3,19 @@ import { fetchMultipleFolders, type DriveGallerySection, type DriveImage } from 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Play, Pause, X, ChevronLeft, ChevronRight, Presentation } from "lucide-react";
+import { Play, Pause, X, Presentation } from "lucide-react";
 
 const tags = ["All", "MindSpark", "PromptFusion", "PosterVision", "PromptStack", "FFSAL", "Inauguration Event"];
+
+// Event descriptions from Timeline
+const eventDescriptions: Record<string, string> = {
+	"Inauguration Event": "Marked the beginning of ThinkBotz with an inspiring inauguration that brought students and faculty together to kick off our journey.",
+	"MindSpark": "Launched our first major event - a technical quiz competition testing logical reasoning, problem-solving skills, and fundamental programming knowledge. Participants competed in multiple rounds covering Logical Reasoning, C, Python, Java, and core technical concepts.",
+	"PromptFusion": "Explored AI creativity with our second event where students demonstrated AI-powered prompt generation, image creation, and video generation skills. Participants challenged themselves with creative prompts and innovative AI-powered tasks.",
+	"PosterVision": "Showcased student creativity through poster presentation competition. Students demonstrated innovative ideas and technical knowledge through visually engaging posters, enhancing presentation skills and creative thinking.",
+	"PromptStack": "Conducted an AI Tools Show & Tell event where students demonstrated and discussed various AI tools in an interactive format. Participants showcased technical knowledge, creativity, and practical understanding of cutting-edge AI technologies.",
+	"FFSAL": "Organized the Free Fire Student Association League gaming competition showcasing strategic thinking, teamwork, and competitive gameplay. Participants demonstrated coordination, tactical planning, and decision-making skills.",
+};
 
 export default function Gallery() {
 	const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -205,70 +215,86 @@ export default function Gallery() {
 
 				{/* Fullscreen Slideshow Modal */}
 				<Dialog open={slideshowMode} onOpenChange={setSlideshowMode}>
-					<DialogContent className="max-w-full w-screen h-screen p-0 bg-black/95 border-0">
-						<div className="relative w-full h-full flex items-center justify-center">
-							{/* Close Button */}
-							<button
-								onClick={() => setSlideshowMode(false)}
-								className="absolute top-4 right-4 z-50 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-								aria-label="Close slideshow"
-							>
-								<X className="w-6 h-6 text-white" />
-							</button>
-
-							{/* Play/Pause Button */}
-							<button
-								onClick={() => setIsPlaying(!isPlaying)}
-								className="absolute top-4 right-16 z-50 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-								aria-label={isPlaying ? "Pause" : "Play"}
-							>
-								{isPlaying ? (
-									<Pause className="w-6 h-6 text-white" />
-								) : (
-									<Play className="w-6 h-6 text-white" />
-								)}
-							</button>
-
-							{/* Previous Button */}
-							<button
-								onClick={handlePrevSlide}
-								className="absolute left-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-								aria-label="Previous image"
-							>
-								<ChevronLeft className="w-8 h-8 text-white" />
-							</button>
-
-							{/* Next Button */}
-							<button
-								onClick={handleNextSlide}
-								className="absolute right-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-								aria-label="Next image"
-							>
-								<ChevronRight className="w-8 h-8 text-white" />
-							</button>
-
-							{/* Image and Info */}
+					<DialogContent className="max-w-full w-screen h-screen p-0 border-0">
+						{/* Gradient Background */}
+						<div className="absolute inset-0 bg-gradient-to-br from-brand-lavender via-white to-brand-lavender" />
+						
+						{/* Content Container */}
+						<div className="relative w-full h-full flex items-stretch overflow-hidden">
+							{/* Left Side - Image */}
 							{flatImages[slideshowIndex] && (
-								<div className="relative w-full h-full flex flex-col items-center justify-center">
-									{/* Image */}
-									<div className="relative max-w-7xl max-h-[85vh] w-full h-full flex items-center justify-center px-20 py-16">
-										<img
-											src={flatImages[slideshowIndex].img.thumbnailUrl.replace('=s220', '=s2048')}
-											alt={`${flatImages[slideshowIndex].sectionTitle} image`}
-											className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
-										/>
+								<>
+									<div className="w-1/2 flex items-center justify-center p-8 md:p-12">
+										<div className="relative w-full h-full flex items-center justify-center">
+											<div className="absolute inset-0 bg-gradient-to-r from-brand-purple/5 to-brand-brinjal/5 rounded-2xl blur-3xl" />
+											<img
+												src={flatImages[slideshowIndex].img.thumbnailUrl.replace('=s220', '=s2048')}
+												alt={`${flatImages[slideshowIndex].sectionTitle} image`}
+												className="relative max-w-full max-h-full object-contain rounded-2xl shadow-2xl"
+											/>
+										</div>
 									</div>
 
-									{/* Event Name Overlay */}
-									<div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-black/70 backdrop-blur-sm px-6 py-3 rounded-full">
-										<h3 className="text-white text-lg md:text-xl font-semibold">
-											{flatImages[slideshowIndex].sectionTitle}
-										</h3>
-										<p className="text-white/80 text-sm text-center mt-1">
-											{slideshowIndex + 1} / {flatImages.length}
-										</p>
+									{/* Right Side - Event Details */}
+									<div className="w-1/2 flex flex-col items-center justify-center p-8 md:p-16 bg-gradient-to-br from-brand-lavender/40 to-white backdrop-blur-sm border-l-4 border-brand-brinjal/20">
+										{/* Header */}
+										<div className="w-full text-center mb-12">
+											<h1 className="text-3xl md:text-4xl font-bold text-brand-brinjal mb-2">
+												THINKBOTZ STUDENT ASSOCIATION
+											</h1>
+											<p className="text-brand-brinjal/70 text-sm md:text-base font-semibold">
+												Dept. of CSE(AI & ML)
+											</p>
+										</div>
+
+										<div className="max-w-lg w-full space-y-8">
+											{/* Event Title */}
+											<div className="space-y-4">
+												<div className="inline-block px-4 py-2 rounded-full bg-brand-brinjal/10 border border-brand-brinjal/30">
+													<p className="text-brand-brinjal text-sm font-semibold uppercase tracking-wider">
+														Event
+													</p>
+												</div>
+												<h2 className="text-4xl md:text-5xl font-bold text-brand-brinjal leading-tight">
+													{flatImages[slideshowIndex].sectionTitle}
+												</h2>
+											</div>
+
+											{/* Event Description */}
+											<div className="space-y-4 border-t-2 border-brand-brinjal/20 pt-8">
+												<p className="text-brand-brinjal/70 text-sm uppercase tracking-widest font-semibold">About Event</p>
+												<p className="text-brand-brinjal text-base leading-relaxed">
+													{eventDescriptions[flatImages[slideshowIndex].sectionTitle] || "Explore the moments captured from this amazing event."}
+												</p>
+											</div>
+										</div>
 									</div>
-								</div>
+
+									{/* Control Buttons */}
+									<div className="absolute top-6 right-6 z-50 flex gap-3">
+										{/* Play/Pause Button */}
+										<button
+											onClick={() => setIsPlaying(!isPlaying)}
+											className="p-3 rounded-full bg-brand-brinjal/10 hover:bg-brand-brinjal/20 transition-all duration-300 border border-brand-brinjal/30 hover:border-brand-brinjal/50"
+											aria-label={isPlaying ? "Pause" : "Play"}
+										>
+											{isPlaying ? (
+												<Pause className="w-5 h-5 text-brand-brinjal" />
+											) : (
+												<Play className="w-5 h-5 text-brand-brinjal" />
+											)}
+										</button>
+
+										{/* Close Button */}
+										<button
+											onClick={() => setSlideshowMode(false)}
+											className="p-3 rounded-full bg-brand-brinjal/10 hover:bg-brand-brinjal/20 transition-all duration-300 border border-brand-brinjal/30 hover:border-brand-brinjal/50"
+											aria-label="Close slideshow"
+										>
+											<X className="w-5 h-5 text-brand-brinjal" />
+										</button>
+									</div>
+								</>
 							)}
 						</div>
 					</DialogContent>
