@@ -88,6 +88,25 @@ const getLevelBadge = (level: string) => {
     }
 };
 
+const normalizeName = (value: string) => value.toLowerCase().replace(/[^a-z]/g, "");
+
+const teamImageMatches = [
+    { key: normalizeName("Aslam"), url: "/teampics/Aslam.jpg" },
+    { key: normalizeName("Dedeepya"), url: "/teampics/Dedeepya.jpg" },
+    { key: normalizeName("Divya Bharathi"), url: "/teampics/Divya%20bharathi.jpg" },
+    { key: normalizeName("Syed Rayan"), url: "/teampics/Syed%20rayan.jpg" },
+    { key: normalizeName("Tharun"), url: "/teampics/Tharun.jpg" },
+    { key: normalizeName("Swetha"), url: "/teampics/swetha.jpg" },
+    { key: normalizeName("Syed Naseer"), url: "/teampics/syed%20naseer.png" },
+    { key: normalizeName("Homa Kesav"), url: "/teampics/HOD.jpg" },
+];
+
+const getMemberImage = (name: string) => {
+    const normalized = normalizeName(name);
+    const match = teamImageMatches.find((item) => normalized.includes(item.key));
+    return match?.url;
+};
+
 export default function About() {
     // Group members by new hierarchy
     const hod = hierarchyMembers.filter((m) => m.level === "hod");
@@ -106,46 +125,106 @@ export default function About() {
                     {title}
                 </h3>
                 <div className="flex flex-wrap justify-center gap-6">
-                    {members.map((member, index) => (
-                        <Card
-                            key={index}
-                            className="w-full max-w-xs sm:w-[320px] hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-                        >
-                            <CardHeader className="text-center pb-2">
-                                <div
-                                    className={`w-16 h-16 rounded-2xl ${getLevelColor(
-                                        member.level
-                                    )} mx-auto flex items-center justify-center mb-4`}
+                    {members.map((member, index) => {
+                        const imageUrl = getMemberImage(member.name);
+
+                        if (imageUrl) {
+                            return (
+                                <Card
+                                    key={index}
+                                    className="group w-full max-w-xs sm:w-[320px] overflow-hidden border border-brand-lavender/60 bg-gradient-to-br from-white via-white to-brand-lavender/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                                 >
-                                    <Users className="w-8 h-8 text-white" />
-                                </div>
-                                <CardTitle className="text-lg">{member.name}</CardTitle>
-                                <div className="flex flex-col items-center space-y-2">
-                                    <Badge {...getLevelBadge(member.level)}>
-                                        {getLevelBadge(member.level).text}
-                                    </Badge>
-                                    {member.level !== "hod" && (
-                                        <span className="text-xs text-muted-foreground">
-                                            {member.year}
-                                        </span>
+                                    <div className="relative px-6 pt-6">
+                                        <div
+                                            className={`absolute -top-14 right-6 h-28 w-28 rounded-[28px] opacity-30 blur-2xl ${getLevelColor(
+                                                member.level
+                                            )}`}
+                                        />
+                                        <div className="flex items-center justify-between">
+                                            <Badge {...getLevelBadge(member.level)}>
+                                                {getLevelBadge(member.level).text}
+                                            </Badge>
+                                            {member.level !== "hod" && (
+                                                <span className="text-xs text-muted-foreground">
+                                                    {member.year}
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <CardHeader className="text-center pt-4 pb-2">
+                                        <div className="relative mx-auto">
+                                            <div className="h-28 w-28 rounded-[28px] bg-gradient-to-br from-brand-purple/20 to-brand-brinjal/40 p-[2px] shadow-lg">
+                                                <div className="h-full w-full rounded-[26px] bg-white p-1">
+                                                    <img
+                                                        src={imageUrl}
+                                                        alt={member.name}
+                                                        className="h-full w-full rounded-[22px] object-cover"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <CardTitle className="mt-6 text-lg">{member.name}</CardTitle>
+                                    </CardHeader>
+                                    {member.link.enabled && member.link.url ? (
+                                        <CardContent className="flex justify-center pb-6">
+                                            <a
+                                                href={member.link.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-brand-brinjal text-white font-medium hover:bg-brand-purple transition"
+                                            >
+                                                <LinkIcon className="w-4 h-4" />
+                                                Profile
+                                            </a>
+                                        </CardContent>
+                                    ) : (
+                                        <CardContent className="pb-6" />
                                     )}
-                                </div>
-                            </CardHeader>
-                            {member.link.enabled && member.link.url ? (
-                                <CardContent className="flex justify-center">
-                                    <a
-                                        href={member.link.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-brand-brinjal text-white font-medium hover:bg-brand-purple transition"
+                                </Card>
+                            );
+                        }
+
+                        return (
+                            <Card
+                                key={index}
+                                className="w-full max-w-xs sm:w-[320px] hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                            >
+                                <CardHeader className="text-center pb-2">
+                                    <div
+                                        className={`w-16 h-16 rounded-2xl ${getLevelColor(
+                                            member.level
+                                        )} mx-auto flex items-center justify-center mb-4`}
                                     >
-                                        <LinkIcon className="w-4 h-4" />
-                                        Profile
-                                    </a>
-                                </CardContent>
-                            ) : null}
-                        </Card>
-                    ))}
+                                        <Users className="w-8 h-8 text-white" />
+                                    </div>
+                                    <CardTitle className="text-lg">{member.name}</CardTitle>
+                                    <div className="flex flex-col items-center space-y-2">
+                                        <Badge {...getLevelBadge(member.level)}>
+                                            {getLevelBadge(member.level).text}
+                                        </Badge>
+                                        {member.level !== "hod" && (
+                                            <span className="text-xs text-muted-foreground">
+                                                {member.year}
+                                            </span>
+                                        )}
+                                    </div>
+                                </CardHeader>
+                                {member.link.enabled && member.link.url ? (
+                                    <CardContent className="flex justify-center">
+                                        <a
+                                            href={member.link.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-brand-brinjal text-white font-medium hover:bg-brand-purple transition"
+                                        >
+                                            <LinkIcon className="w-4 h-4" />
+                                            Profile
+                                        </a>
+                                    </CardContent>
+                                ) : null}
+                            </Card>
+                        );
+                    })}
                 </div>
             </div>
         );
@@ -281,10 +360,10 @@ export default function About() {
                             <p className="text-sm text-muted-foreground">
                                 Having trouble or need Tech support:<br />
                                 <a
-                                    href="mailto:galatfamily@gmail.com"
+                                    href="mailto:contact.galatfamily@gmail.com"
                                     className="text-brand-brinjal underline"
                                 >
-                                    galatfamily@gmail.com
+                                    contact.galatfamily@gmail.com
                                 </a>
                             </p>
                         </div>
