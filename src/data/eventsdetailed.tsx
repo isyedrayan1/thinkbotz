@@ -1,13 +1,13 @@
 export const hackathons = [
   {
     id: 1,
-    title: "Prompt Fusion",
-    description: "A prompt engineering challenge for AI enthusiasts. Tackle real-world tasks by crafting effective prompts for language models.",
-    longDescription: "Prompt Fusion is a unique competition where participants solve tasks by designing prompts for AI language models. The event tests creativity, logic, and understanding of AI capabilities. Top performers will be recognized for their innovative prompt engineering.",
-    date: "2025-09-12",
-    time: "13:00",
-    endTime: "18:00",
-    location: "AITK - Kadapa",
+    title: "MindSpark",
+    description: "A technical quiz competition testing logical reasoning, problem-solving skills, and fundamental programming knowledge.",
+    longDescription: "The ThinkBotz Student Association of the Department of CSE (AI & ML) organized a technical quiz event 'MindSpark' on 11th September 2025 at the Placement Cell – Room 304, AITS, Kadapa. The event was open to all CSE(AI&ML) students from I, II, III, and IV year, with the objective of testing their logical reasoning, problem-solving skills, and fundamental programming knowledge. The quiz was structured in multiple rounds covering Logical Reasoning, Basic C, Python, and Java programming concepts, along with core technical knowledge. Students from all years participated enthusiastically, showcasing their technical skills, quick thinking, and competitive spirit.",
+    date: "2025-09-11",
+    time: "15:00",
+    endTime: "17:00",
+    location: "Placement Room, No. 304 - AITS, Kadapa",
     coordinators: [
       { name: "O.V. Sownmya", role: "faculty", class: "" },
       { name: "K. Lashmikala", role: "faculty", class: "" },
@@ -16,62 +16,82 @@ export const hackathons = [
       { name: "S. Suhail", role: "Student", class: "4th year" },
       { name: "K. Veena Madhuri", role: "Student", class: "4th year" }
     ],
-    isUpcoming: true,
+    isUpcoming: false,
     registrationLink: "typeform",
-    featured: true,
+    featured: false,
     schedule: [
-      { day: "Event Day", date: "Dec 18", events: ["Introduction", "Prompt Challenges", "Evaluation", "Awards"] }
+      { day: "Event Day", date: "Sep 11", events: ["Introduction", "Logical Reasoning Round", "Programming Concepts Round", "Evaluation", "Awards"] }
     ],
     prizes: [
-      { position: "Winner" }
+      {
+        position: "Winner",
+        teamName: "Rohith & Shiva's Group",
+        participants: ["Sangati Rohith Kumar Reddy", "Mallem Shiva Sankar"]
+      },
+      {
+        position: "Runner Up",
+        teamName: "Achievers",
+        participants: ["SHAIK SHAKEER", "Tanzeel"]
+      }
     ],
     requirements: [
-      "Individual or team (max 2)",
-      "Laptop required",
-      "Basic knowledge of AI/ML"
+      "Team consists of 2 students",
+      "Form your own team",
+      "Be on time to Placement Room 304",
+      "Basic programming knowledge"
     ]
   },
   {
     id: 2,
-    title: "Logic League",
-    description: "A hands-on AI & ML workshop for beginners and enthusiasts. Learn neural networks, Python coding for AI, and build real-time projects guided by mentors.",
-    longDescription: "Logic League is a one-day workshop designed to introduce students to the world of Artificial Intelligence and Machine Learning. Participants will learn the basics of neural networks, Python programming for AI, and work on real-time projects. The workshop includes interactive sessions, coding labs, and mentorship from experienced AI professionals.",
+    title: "Prompt Fusion",
+    description: "An innovative AI event where students explored creativity and technical skills through AI-powered prompt-based generation and image creation.",
+    longDescription: "The ThinkBotz Student Association of the Department of CSE (AI & ML) organized a technical event 'Prompt Fusion' on 19th September 2025 at the Placement Cell – Room 304, AITS, Kadapa. The event was open to all CSE(AI&ML) students from I, II, III, and IV year, where the students explored their creativity and technical skills through innovative tasks involving AI-powered prompt-based generation. In this event, participants were challenged to: Generate similar images as given using creative prompts, Perform image generation using keywords, and Experiment with video generation through AI tools. The event successfully enhanced students' understanding of AI capabilities and creative problem-solving.",
     date: "2025-09-19",
-    time: "10:00",
-    endTime: "16:00",
-    location: "AITK - Kadapa",
+    time: "15:00",
+    endTime: "17:00",
+    location: "Placement Room, No. 304 - AITS, Kadapa",
     coordinators: [
-      { name: "J. Vyshnavi", role: "faculty", class: "" },
-      { name: "K. Sowmya", role: "faculty", class: "" },
-      { name: "V. Jagadeesh", role: "faculty", class: "" },
-      { name: "Y.B. Mahadir", role: "Student", class: "4th year" },
-      { name: "N.S.M. Fayak", role: "Student", class: "4th year" },
-      { name: "P. Arshiya", role: "Student", class: "4th year" }
+      { name: "O.V. Sownmya", role: "faculty", class: "" },
+      { name: "K. Lashmikala", role: "faculty", class: "" },
+      { name: "R. Vamsi", role: "faculty", class: "" },
+      { name: "K. Viswanath", role: "Student", class: "4th year" },
+      { name: "S. Suhail", role: "Student", class: "4th year" },
+      { name: "K. Veena Madhuri", role: "Student", class: "4th year" }
     ],
-    isUpcoming: true,
+    isUpcoming: false,
     registrationLink: "typeform",
     featured: false,
     schedule: [
-      { day: "Event Day", date: "Nov 5", events: ["Introduction to AI & ML", "Python for AI", "Neural Networks Basics", "Hands-on Lab", "Project Presentations"] }
+      { day: "Event Day", date: "Sep 19", events: ["Introduction to AI Tools", "Image Generation Challenge", "Video Generation Task", "Evaluation", "Awards"] }
     ],
     prizes: [
-      { position: "Best Project" }
+      {
+        position: "Winner",
+        teamName: "Individual",
+        participants: ["BUDDAYAPALLI SHALEM JONATHAN"]
+      },
+      {
+        position: "Runner Up",
+        teamName: "Individual",
+        participants: ["SHAIK AHAMMAD"]
+      }
     ],
     requirements: [
-      "Laptop with Python installed",
-      "Basic programming knowledge",
-      "Interest in AI/ML"
+      "Individual event",
+      "Laptop with internet connection",
+      "Basic knowledge of AI tools",
+      "Be on time to Placement Room 304"
     ]
   },
   {
     id: 3,
     title: "Poster Vision",
-    description: "A poster design competition to showcase your creativity and design skills on tech and innovation themes.",
-    longDescription: "Poster Vision is a design competition where participants create posters on themes related to technology and innovation. The event encourages creativity, visual storytelling, and effective communication through design.",
-    date: "2025-12-01",
-    time: "11:00",
-    endTime: "16:00",
-    location: "AITK - Kadapa",
+    description: "A poster presentation competition where students showcase their creativity, innovative ideas, and technical knowledge through visually engaging posters.",
+    longDescription: "A 'Poster Vision' poster presentation competition was conducted by the Department of CSE (AI & ML) under the THINKBOTZ Student Association on 10/12/2025 for I to IV year students at the Placement Room, AITS Kadapa. The event provided students an opportunity to showcase their creativity, innovative ideas, and technical knowledge through visually engaging posters. Participants demonstrated great enthusiasm and originality throughout the competition. The program successfully enhanced students' presentation skills, technical understanding, and creative thinking. Theme: POSTER VISION",
+    date: "2025-12-10",
+    time: "15:00",
+    endTime: "18:00",
+    location: "Placement Room, No. 304 - AITS, Kadapa",
     coordinators: [
       { name: "K. Lashmikala", role: "faculty", class: "" },
       { name: "N. Susmitha", role: "faculty", class: "" },
@@ -82,102 +102,40 @@ export const hackathons = [
       { name: "V. Venkateshwarlu", role: "Student", class: "2nd-C year" },
       { name: "I. Kesava", role: "Student", class: "2nd-A year" }
     ],
-    isUpcoming: true,
+    isUpcoming: false,
     registrationLink: "typeform",
     featured: false,
     schedule: [
-      { day: "Event Day", date: "Dec 10", events: ["Briefing", "Poster Design", "Submission", "Judging & Awards"] }
+      { day: "Event Day", date: "Dec 10", events: ["Briefing", "Poster Preparation", "Submission", "Judging", "Awards"] }
     ],
     prizes: [
-      { position: "Best Poster" },
-      { position: "Runner Up" }
+      {
+        position: "1st Prize",
+        teamName: "Not Announced",
+        participants: []
+      },
+      {
+        position: "2nd Prize",
+        teamName: "Not Announced",
+        participants: []
+      }
     ],
     requirements: [
-      "Individual participation",
-      "Bring your own art supplies",
-      "Poster size: A2"
+      "Individual or team (2–3 students)",
+      "Be on time to Placement Room 304",
+      "Bring your own creative materials",
+      "Can form your own team"
     ]
   },
   {
     id: 4,
-    title: "MindSpark",
-    description: "A 24-hour ideathon to spark creativity and innovation. Pitch your ideas, form teams, and build prototypes with expert guidance.",
-    longDescription: "MindSpark is an ideathon where students pitch creative solutions to pressing challenges. Teams will brainstorm, validate, and prototype their ideas within a day, with guidance from mentors. The event culminates in a pitch session to a panel of judges.",
-    date: "2025-12-15",
-    time: "08:00",
-    endTime: "20:00",
-    location: "AITK - Kadapa",
-    coordinators: [
-      { name: "O.V. Sownmya", role: "faculty", class: "" },
-      { name: "P. Swaroopa Rani", role: "faculty", class: "" },
-      { name: "N. Susmitha", role: "faculty", class: "" },
-      { name: "S. Sumaya", role: "Student", class: "3rd year" },
-      { name: "S. Rahil", role: "Student", class: "3rd year" },
-      { name: "G. Chandrakala", role: "Student", class: "3rd year" },
-      { name: "B. Naveen Banu", role: "Student", class: "2nd-A year" },
-      { name: "T. Vedapriya", role: "Student", class: "2nd-C year" }
-    ],
-    isUpcoming: true,
-    registrationLink: "typeform",
-    featured: false,
-    schedule: [
-      { day: "Event Day", date: "Dec 1", events: ["Opening & Theme Reveal", "Team Formation", "Ideation", "Prototype Building", "Final Presentations", "Awards"] }
-    ],
-    prizes: [
-      { position: "Winner" },
-      { position: "Runner Up" }
-    ],
-    requirements: [
-      "Teams of 2-4 members",
-      "Laptop",
-      "Creative mindset"
-    ]
-  },
-  {
-    id: 5,
-    title: "LensCraft",
-    description: "A thrilling hackathon where students collaborate, innovate, and code to solve real-world problems. Prizes, certificates, and networking opportunities included!",
-    longDescription: "LensCraft is a one-day hackathon that challenges participants to develop innovative solutions to real-world problems. Teams will brainstorm, design, and code their projects, with mentorship from industry experts. The event includes workshops, networking sessions, and fun activities. Top teams will win mementos and certificates.",
-    date: "2025-12-22",
-    time: "09:00",
+    title: "Smart Stack",
+    description: "An AI Tools Show & Tell Event where students demonstrate and discuss various AI tools in an interactive format, showcasing technical knowledge and practical skills.",
+    longDescription: "A 'Smart Stack' AI Tools Show & Tell event was conducted by the Department of CSE (AI & ML) under the THINKBOTZ Student Association on 23/12/2025 for I to IV year students at the Placement Room, AITS Kadapa. The event provided students an opportunity to explore, demonstrate, and discuss various AI tools in an interactive format. Participants presented their ideas individually or in teams of 2–3, showcasing technical knowledge, creativity, and practical understanding. The program successfully enhanced students' awareness of AI technologies, analytical thinking, and hands-on skills. Theme: SMART STACK",
+    date: "2025-12-23",
+    time: "15:00",
     endTime: "18:00",
-    location: "AITK - Kadapa",
-    coordinators: [
-      { name: "R. Vamsi", role: "faculty", class: "" },
-      { name: "K. Lashmikala", role: "faculty", class: "" },
-      { name: "V. Jagadeesh", role: "faculty", class: "" },
-      { name: "S. Zunaira", role: "Student", class: "3rd year" },
-      { name: "S. Naseer Basha", role: "Student", class: "3rd year" },
-      { name: "K.V Badrinath", role: "Student", class: "3rd year" },
-      { name: "S. Rohith Kumar", role: "Student", class: "2nd-B year" },
-      { name: "G.V Sai Devika", role: "Student", class: "2nd-A year" }
-    ],
-    isUpcoming: true,
-    registrationLink: "typeform",
-    featured: false,
-    schedule: [
-      { day: "Event Day", date: "Oct 10", events: ["Opening Ceremony", "Problem Statement Release", "Coding", "Project Demos", "Award Ceremony"] }
-    ],
-    prizes: [
-      { position: "1st Prize" },
-      { position: "2nd Prize" },
-      { position: "3rd Prize" }
-    ],
-    requirements: [
-      "Valid college ID",
-      "Teams of 2-5 members",
-      "Laptop with required software"
-    ]
-  },
-  {
-    id: 6,
-    title: "Smart Stacks",
-    description: "A full-stack development hackathon. Build scalable web apps and compete for top honors.",
-    longDescription: "Smart Stacks is a hackathon focused on full-stack web development. Participants will design, build, and deploy scalable web applications using modern frameworks. The event includes mentorship, workshops, and a final demo session.",
-    date: "2026-01-30",
-    time: "09:00",
-    endTime: "16:00",
-    location: "AITK - Kadapa",
+    location: "Placement Room, No. 304 - AITS, Kadapa",
     coordinators: [
       { name: "P. Swaroopa Rani", role: "faculty", class: "" },
       { name: "J. Vyshnavi", role: "faculty", class: "" },
@@ -188,31 +146,42 @@ export const hackathons = [
       { name: "S. Karthik", role: "Student", class: "2nd-B year" },
       { name: "M. Gokarna Reddy", role: "Student", class: "2nd-B year" }
     ],
-    isUpcoming: true,
+    isUpcoming: false,
     registrationLink: "typeform",
     featured: false,
     schedule: [
-      { day: "Event Day", date: "Jan 15", events: ["Kickoff", "Team Coding", "Mentor Check-ins", "Project Submission", "Demo & Awards"] }
+      { day: "Dec 23", date: "Dec 23", events: ["AI Tools Presentation", "Interactive Demonstrations", "Q&A Session", "Awards"] },
+      { day: "Dec 24", date: "Dec 24", events: ["Continued Demonstrations", "Networking"] },
+      { day: "Dec 25", date: "Dec 25", events: ["Final Presentations", "Announcement of Winners"] }
     ],
     prizes: [
-      { position: "1st Prize" },
-      { position: "2nd Prize" }
+      {
+        position: "Winner",
+        teamName: "Vidhisha",
+        participants: ["O.Vidhisha"]
+      },
+      {
+        position: "Runner Up",
+        teamName: "IntelliOne",
+        participants: ["K.Venkata Naga Sowmya"]
+      }
     ],
     requirements: [
-      "Teams of 2-4",
-      "Laptop with Node.js & Git",
-      "Basic web development skills"
+      "Individual or team (2–3 students)",
+      "Laptop with AI tools installed",
+      "Be on time to Placement Room 304",
+      "Can form your own team"
     ]
   },
   {
-    id: 7,
-    title: "AI Builders Arena",
-    description: "A competitive hackathon for AI builders. Solve real-world challenges using machine learning and data science.",
-    longDescription: "AI Builders Arena is a hackathon where participants tackle real-world problems using AI and data science. Teams will have access to datasets, cloud resources, and mentorship. The event concludes with project demos and awards for the best solutions.",
-    date: "2026-02-09",
-    time: "10:00 ",
-    endTime: "16:00",
-    location: "AITK - Kadapa",
+    id: 5,
+    title: "FFSAL - Free Fire Student Association League",
+    description: "An eSports gaming competition focusing on Free Fire, showcasing strategic thinking, teamwork, and competitive gameplay.",
+    longDescription: "The Free Fire Student Association League, an eSports gaming competition, was conducted by the Department of CSE (AI & ML) under the THINKBOTZ Student Association for I to IV year students at AITS, Kadapa on 2nd, 3rd, and 5th January 2026. The event provided a platform for students to compete in the popular Free Fire game, showcasing their strategic thinking, quick reflexes, and teamwork. Participants demonstrated coordination, tactical planning, and decision-making under pressure, generating great enthusiasm and excitement. Overall, the event was successfully organized, promoting healthy competition, digital gaming skills, and collaborative spirit among students. Theme: FFSAL (eSports)",
+    date: "2026-01-02",
+    time: "14:00",
+    endTime: "17:00",
+    location: "Placement Room, No. 304 - AITS, Kadapa",
     coordinators: [
       { name: "R. Sowmya", role: "faculty", class: "" },
       { name: "J. Vyshnavi", role: "faculty", class: "" },
@@ -221,20 +190,32 @@ export const hackathons = [
       { name: "Syed Rayan", role: "Student", class: "3rd year" },
       { name: "Syed Naseer", role: "Student", class: "3rd year" }
     ],
-    isUpcoming: true,
+    isUpcoming: false,
     registrationLink: "typeform",
     featured: false,
     schedule: [
-      { day: "Event Day", date: "Feb 10", events: ["Problem Statement Release", "Team Coding", "Mentor Sessions", "Project Demos", "Awards"] }
+      { day: "Day 1", date: "Jan 2", events: ["Team Registration", "Practice Rounds", "Opening Matches"] },
+      { day: "Day 2", date: "Jan 3", events: ["Group Stage Matches", "Semifinals"] },
+      { day: "Day 3", date: "Jan 5", events: ["Finals", "Award Ceremony", "Closing Remarks"] }
     ],
     prizes: [
-      { position: "Winner" },
-      { position: "Runner Up" }
+      {
+        position: "Winner",
+        teamName: "NOTxESPORTS",
+        participants: ["SHAIK MAHAMMAD ASLAM HUSSAIN", "SYED RAHIL", "SHAIK AYUB HUSSAIN", "SHAIK AZIES"]
+      },
+      {
+        position: "Runner Up",
+        teamName: "PHANTOMS",
+        participants: ["GANTA MANOJ KUMAR REDDY", "MATAM SIVA KOUTILYA SAI", "MACHA VAMSHIKRISHNA", "G NAVEEN"]
+      }
     ],
     requirements: [
-      "Teams of 2-4",
-      "Laptop with Python & ML libraries",
-      "Basic ML knowledge"
+      "Participation is in teams",
+      "Each team consists of four members",
+      "Free Fire account required",
+      "Be on time to Placement Room 304",
+      "Basic Free Fire gaming knowledge"
     ]
   }
 ];

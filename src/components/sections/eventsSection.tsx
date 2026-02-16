@@ -5,10 +5,10 @@ import { Calendar, ExternalLink } from "lucide-react";
 import { hackathons } from "../../data/eventsdetailed";
 import { Badge } from "@/components/ui/badge";
 
-// Use isUpcoming boolean for status, sort by date ascending, show only upcoming
+// Use isUpcoming boolean for status, sort by date descending, show only completed
 const upcomingEvents = hackathons
-  .filter(event => event.isUpcoming)
-  .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+  .filter(event => !event.isUpcoming)
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   .slice(0, 3);
 
 export default function AnnouncementSec() {
@@ -24,8 +24,8 @@ export default function AnnouncementSec() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-12">
           <div>
-            <h2 className="text-3xl font-bold text-foreground mb-2">Upcoming Events</h2>
-            <p className="text-muted-foreground">Don't miss out on these exciting events</p>
+            <h2 className="text-3xl font-bold text-foreground mb-2">Past Events</h2>
+            <p className="text-muted-foreground">Explore our recently concluded events</p>
           </div>
           <Button
             asChild

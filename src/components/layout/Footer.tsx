@@ -39,12 +39,12 @@ export function Footer() {
 				<div>
 					Website created by{" "}
 					<a
-						href="https://isyedrayan.online"
+						href="https://galatfamily.in"
 						target="_blank"
 						rel="noopener noreferrer"
 						className="text-brand-brinjal underline font-semibold hover:text-brand-purple"
 					>
-						Syed Rayan
+						Galat Family
 					</a>
 					{" "} | Technical Team - ThinkBotz
 				</div>

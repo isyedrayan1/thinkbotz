@@ -37,18 +37,18 @@ export default function Events() {
   );
 
   return (
-    <div className="min-h-screen py-12">
+    <div className="min-h-screen pt-28 md:pt-28 pb-16 md:pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 md:mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Events</h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
             Discover exciting hackathons, workshops, and competitions organized by our association
           </p>
         </div>
 
         {/* Search and Status Filter */}
-        <div className="bg-white rounded-2xl shadow-sm border p-6 mb-8">
+        <div className="bg-white rounded-2xl shadow-sm border p-6 md:p-8 mb-10 md:mb-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-2">
               <div className="relative">
@@ -76,12 +76,12 @@ export default function Events() {
 
         {/* Featured Events */}
         {featuredEvents.length > 0 && (
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center">
+          <div className="mb-16 md:mb-20">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 flex items-center">
               <span className="w-2 h-8 bg-gradient-to-b from-brand-purple to-brand-brinjal rounded-full mr-3"></span>
               Featured Events
             </h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8\">
               {featuredEvents.map(event => (
                 <Card key={event.id} className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-brand-purple">
                   <CardHeader>
@@ -127,7 +127,7 @@ export default function Events() {
 
         {/* All Events */}
         <div>
-          <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 flex items-center\">
             <span className="w-2 h-8 bg-gradient-to-b from-green-500 to-emerald-500 rounded-full mr-3"></span>
             All Events ({filteredEvents.length})
           </h2>
@@ -140,7 +140,7 @@ export default function Events() {
               </div>
             </Card>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8\">
               {regularEvents.concat(featuredEvents).map(event => (
                 <Card key={event.id} className="hover:shadow-md transition-shadow">
                   <CardHeader>

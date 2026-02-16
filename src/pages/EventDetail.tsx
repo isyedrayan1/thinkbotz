@@ -98,9 +98,9 @@ export default function EventDetail() {
   };
 
   return (
-    <div className="min-h-screen py-6 sm:py-10">
-      <div className="max-w-3xl mx-auto px-2 sm:px-4 lg:px-8">
-        {/* Back Button and Apply Now */}
+    <div className="min-h-screen py-8 md:py-12 pt-20 md:pt-28 pb-16 md:pb-20">
+      <div className="max-w-4xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+        {/* Back Button and Apply Now / Event Report */}
         <div className="mb-4 flex flex-col sm:flex-row items-center gap-2">
           <Button asChild variant="outline" size="sm" className="w-full sm:w-auto">
             <Link to="/events">
@@ -108,14 +108,24 @@ export default function EventDetail() {
               Back
             </Link>
           </Button>
-          <Button
-            onClick={handleRegister}
-            className="bg-gradient-to-r from-brand-purple to-brand-brinjal text-white font-bold rounded-2xl w-full sm:w-auto ml-0 sm:ml-auto"
-            disabled={isRegistered}
-          >
-            {isRegistered ? "Applied ✓" : "Apply Now"}
-            <ExternalLink className="w-4 h-4 ml-2" />
-          </Button>
+          {event.isUpcoming ? (
+            <Button
+              onClick={handleRegister}
+              className="bg-gradient-to-r from-brand-purple to-brand-brinjal text-white font-bold rounded-2xl w-full sm:w-auto ml-0 sm:ml-auto"
+              disabled={isRegistered}
+            >
+              {isRegistered ? "Applied ✓" : "Apply Now"}
+              <ExternalLink className="w-4 h-4 ml-2" />
+            </Button>
+          ) : (
+            <Button
+              variant="outline"
+              className="w-full sm:w-auto ml-0 sm:ml-auto"
+              disabled
+            >
+              Event Completed
+            </Button>
+          )}
         </div>
 
         {/* Google Form Popup Dialog */}
@@ -327,7 +337,40 @@ export default function EventDetail() {
         </Card>
 
         {/* Prizes */}
-        {event.prizes && (
+        {event.prizes && event.prizes.length > 0 && event.prizes[0].participants && event.prizes[0].participants.length > 0 && (
+          <Card className="mb-4">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Trophy className="w-5 h-5" />
+                <span>Winners & Runner-Ups</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {event.prizes.map((prize, index) => (
+                <div key={index} className="border-l-4 border-l-brand-purple p-4 bg-brand-lavender/10 rounded">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Trophy className="w-4 h-4 text-brand-brinjal" />
+                    <span className="font-bold text-brand-brinjal">{prize.position}</span>
+                  </div>
+                  {prize.teamName && prize.teamName !== "Individual" && (
+                    <p className="text-sm font-semibold text-foreground mb-1">Team: {prize.teamName}</p>
+                  )}
+                  <div className="space-y-1">
+                    {prize.participants && prize.participants.length > 0 ? (
+                      prize.participants.map((participant, idx) => (
+                        <p key={idx} className="text-sm text-muted-foreground ml-2">
+                          • {participant}
+                        </p>
+                      ))
+                    ) : (
+                      <p className="text-sm text-muted-foreground italic">Not Announced</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        ) || (event.prizes && (
           <Card className="mb-4">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
@@ -344,7 +387,7 @@ export default function EventDetail() {
               ))}
             </CardContent>
           </Card>
-        )}
+        ))}
       </div>
     </div>
   );
