@@ -14,13 +14,13 @@ const hierarchyMembers = [
     },
     // Presidents
     { name: "S.MD Shoyab", level: "president", year: "4th Year", link: { enabled: false, url: "https://linkedin.com/in/alexmartinez" } },
-    { name: "S.MD Sameer", level: "president", year: "3rd Year", link: { enabled: false, url: "https://linkedin.com/in/alexmartinez" } },
+    { name: "S.MD Sameer", level: "president", year: "3rd Year", link: { enabled: true, url: "https://www.samxiao.fun/" } },
     { name: "S. Abdul Hameed", level: "president", year: "4th Year", link: { enabled: false, url: "https://linkedin.com/in/alexmartinez" } },
     { name: "T. Nikhitha Reddy", level: "president", year: "4th Year", link: { enabled: false, url: "https://linkedin.com/in/alexmartinez" } },
     { name: "U. Dedeepya", level: "president", year: "3rd Year", link: { enabled: false, url: "https://linkedin.com/in/alexmartinez" } },
     // Co-Presidents
     { name: "J. Takeshwar", level: "co-president", year: "4th Year", link: { enabled: false, url: "" } },
-    { name: "Shaik Aslam", level: "co-president", year: "3rd Year", link: { enabled: false, url: "" } },
+    { name: "S.MD. Aslam Hussain", level: "co-president", year: "3rd Year", link: { enabled: false, url: "" } },
     { name: "R. Sindhu", level: "co-president", year: "4th Year", link: { enabled: false, url: "" } },
     { name: "P. Swetha", level: "co-president", year: "3rd Year", link: { enabled: false, url: "" } },
     // Treasurers

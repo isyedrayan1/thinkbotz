@@ -223,17 +223,45 @@ export default function Contact() {
             </Card>
             {/* Technical Team Contact */}
             <div className="rounded-xl bg-brand-lavender/60 p-5 flex items-center gap-4">
+              <div className="w-12 h-12 rounded-lg overflow-hidden bg-white shadow-sm">
+                <img
+                  src="/galat-family.jpg"
+                  alt="Galat Family logo"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div>
+                <div className="font-semibold text-brand-brinjal">Technical Team</div>
+                <div className="text-sm text-muted-foreground">Syed Naseer and Syed Rayan</div>
+                <a
+                  href="https://galatfamily.in"
+                  className="text-sm text-brand-brinjal underline"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  galatfamily.in
+                </a>
+                <a
+                  href="mailto:contact.galatfamily@gmail.com"
+                  className="text-sm text-brand-brinjal underline block"
+                >
+                  contact.galatfamily@gmail.com
+                </a>
+              </div>
+            </div>
+
+            {/* President Contact */}
+            <div className="rounded-xl bg-brand-lavender/60 p-5 flex items-center gap-4">
               <div className="w-12 h-12 bg-brand-lavender rounded-lg flex items-center justify-center">
                 <User className="w-6 h-6 text-brand-brinjal" />
               </div>
               <div>
-                <div className="font-semibold text-brand-brinjal">Technical Team Contact</div>
-                <div className="text-sm text-muted-foreground">Galat Family</div>
+                <div className="font-semibold text-brand-brinjal">President</div>
                 <a
-                  href="mailto:galatfamily@gmail.com"
+                  href="mailto:syedsame2244@gmail.com"
                   className="text-sm text-brand-brinjal underline"
                 >
-                  galatfamily@gmail.com
+                  syedsame2244@gmail.com
                 </a>
               </div>
             </div>

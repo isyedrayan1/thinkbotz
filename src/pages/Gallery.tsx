@@ -215,9 +215,9 @@ export default function Gallery() {
 
 				{/* Fullscreen Slideshow Modal */}
 				<Dialog open={slideshowMode} onOpenChange={setSlideshowMode}>
-					<DialogContent className="max-w-full w-screen h-screen p-0 border-0">
+					<DialogContent className="max-w-full w-screen h-screen p-0 border-0 bg-neutral-950 [&>button]:hidden">
 						{/* Gradient Background */}
-						<div className="absolute inset-0 bg-gradient-to-br from-brand-lavender via-white to-brand-lavender" />
+						<div className="absolute inset-0 bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950" />
 						
 						{/* Content Container */}
 						<div className="relative w-full h-full flex items-stretch overflow-hidden">
@@ -226,7 +226,7 @@ export default function Gallery() {
 								<>
 									<div className="w-1/2 flex items-center justify-center p-8 md:p-12">
 										<div className="relative w-full h-full flex items-center justify-center">
-											<div className="absolute inset-0 bg-gradient-to-r from-brand-purple/5 to-brand-brinjal/5 rounded-2xl blur-3xl" />
+											<div className="absolute inset-0 bg-black/40 rounded-2xl blur-3xl" />
 											<img
 												src={flatImages[slideshowIndex].img.thumbnailUrl.replace('=s220', '=s2048')}
 												alt={`${flatImages[slideshowIndex].sectionTitle} image`}
@@ -236,13 +236,13 @@ export default function Gallery() {
 									</div>
 
 									{/* Right Side - Event Details */}
-									<div className="w-1/2 flex flex-col items-center justify-center p-8 md:p-16 bg-gradient-to-br from-brand-lavender/40 to-white backdrop-blur-sm border-l-4 border-brand-brinjal/20">
+									<div className="w-1/2 flex flex-col items-center justify-center p-8 md:p-16 bg-gradient-to-br from-neutral-950/90 to-neutral-900/70 backdrop-blur-sm border-l-4 border-white/10">
 										{/* Header */}
 										<div className="w-full text-center mb-12">
-											<h1 className="text-3xl md:text-4xl font-bold text-brand-brinjal mb-2">
+											<h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
 												THINKBOTZ STUDENT ASSOCIATION
 											</h1>
-											<p className="text-brand-brinjal/70 text-sm md:text-base font-semibold">
+											<p className="text-white/70 text-sm md:text-base font-semibold">
 												Dept. of CSE(AI & ML)
 											</p>
 										</div>
@@ -250,20 +250,20 @@ export default function Gallery() {
 										<div className="max-w-lg w-full space-y-8">
 											{/* Event Title */}
 											<div className="space-y-4">
-												<div className="inline-block px-4 py-2 rounded-full bg-brand-brinjal/10 border border-brand-brinjal/30">
-													<p className="text-brand-brinjal text-sm font-semibold uppercase tracking-wider">
+												<div className="inline-block px-4 py-2 rounded-full bg-white/10 border border-white/20">
+													<p className="text-white text-sm font-semibold uppercase tracking-wider">
 														Event
 													</p>
 												</div>
-												<h2 className="text-4xl md:text-5xl font-bold text-brand-brinjal leading-tight">
+												<h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
 													{flatImages[slideshowIndex].sectionTitle}
 												</h2>
 											</div>
 
 											{/* Event Description */}
-											<div className="space-y-4 border-t-2 border-brand-brinjal/20 pt-8">
-												<p className="text-brand-brinjal/70 text-sm uppercase tracking-widest font-semibold">About Event</p>
-												<p className="text-brand-brinjal text-base leading-relaxed">
+											<div className="space-y-4 border-t-2 border-white/10 pt-8">
+												<p className="text-white/70 text-sm uppercase tracking-widest font-semibold">About Event</p>
+												<p className="text-white text-base leading-relaxed">
 													{eventDescriptions[flatImages[slideshowIndex].sectionTitle] || "Explore the moments captured from this amazing event."}
 												</p>
 											</div>
@@ -275,23 +275,23 @@ export default function Gallery() {
 										{/* Play/Pause Button */}
 										<button
 											onClick={() => setIsPlaying(!isPlaying)}
-											className="p-3 rounded-full bg-brand-brinjal/10 hover:bg-brand-brinjal/20 transition-all duration-300 border border-brand-brinjal/30 hover:border-brand-brinjal/50"
+											className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 border border-white/20 hover:border-white/40"
 											aria-label={isPlaying ? "Pause" : "Play"}
 										>
 											{isPlaying ? (
-												<Pause className="w-5 h-5 text-brand-brinjal" />
+												<Pause className="w-5 h-5 text-white" />
 											) : (
-												<Play className="w-5 h-5 text-brand-brinjal" />
+												<Play className="w-5 h-5 text-white" />
 											)}
 										</button>
 
 										{/* Close Button */}
 										<button
 											onClick={() => setSlideshowMode(false)}
-											className="p-3 rounded-full bg-brand-brinjal/10 hover:bg-brand-brinjal/20 transition-all duration-300 border border-brand-brinjal/30 hover:border-brand-brinjal/50"
+											className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 border border-white/20 hover:border-white/40"
 											aria-label="Close slideshow"
 										>
-											<X className="w-5 h-5 text-brand-brinjal" />
+											<X className="w-5 h-5 text-white" />
 										</button>
 									</div>
 								</>

@@ -229,18 +229,18 @@ const TimelineComponent = ({ data }: { data: TimelineEntry[] }) => {
 
       {preview ? (
         <Dialog open={!!preview} onOpenChange={() => setPreview(null)}>
-          <DialogContent className="max-w-full w-screen h-screen p-0 border-0 m-0">
+          <DialogContent className="max-w-full w-screen h-screen p-0 border-0 m-0 bg-neutral-950 [&>button]:hidden">
             {/* Gradient Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-brand-lavender via-white to-brand-lavender" />
+            <div className="absolute inset-0 bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950" />
             
             {/* Content Container - Full Viewport */}
             <div className="relative w-screen h-screen flex flex-col items-center justify-center overflow-hidden">
               {/* Header */}
               <div className="w-full text-center px-8 pt-8">
-                <h1 className="text-3xl md:text-4xl font-bold text-brand-brinjal mb-2">
+                <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
                   THINKBOTZ STUDENT ASSOCIATION
                 </h1>
-                <p className="text-brand-brinjal/70 text-sm md:text-base font-semibold">
+                <p className="text-white/70 text-sm md:text-base font-semibold">
                   Dept. of CSE(AI & ML)
                 </p>
               </div>
@@ -248,7 +248,7 @@ const TimelineComponent = ({ data }: { data: TimelineEntry[] }) => {
               {/* Large Image in Middle - Takes up remaining space */}
               <div className="flex-grow flex items-center justify-center w-full px-8 py-4 max-h-[60vh]">
                 <div className="relative w-full h-full flex items-center justify-center">
-                  <div className="absolute inset-0 bg-gradient-to-r from-brand-purple/5 to-brand-brinjal/5 rounded-2xl blur-3xl" />
+                  <div className="absolute inset-0 bg-black/40 rounded-2xl blur-3xl" />
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={preview.index}
@@ -266,10 +266,10 @@ const TimelineComponent = ({ data }: { data: TimelineEntry[] }) => {
 
               {/* Event Name at Bottom */}
               <div className="w-full text-center px-8 pb-8">
-                <h2 className="text-3xl md:text-4xl font-bold text-brand-brinjal mb-2">
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
                   {preview.title}
                 </h2>
-                <p className="text-brand-brinjal/70 text-sm">
+                <p className="text-white/70 text-sm">
                   {preview.index + 1} / {preview.media.length}
                 </p>
               </div>
@@ -279,13 +279,13 @@ const TimelineComponent = ({ data }: { data: TimelineEntry[] }) => {
                 {/* Play/Pause Button */}
                 <button
                   onClick={() => setIsPlaying(!isPlaying)}
-                  className="p-3 rounded-full bg-brand-brinjal/10 hover:bg-brand-brinjal/20 transition-all duration-300 border border-brand-brinjal/30 hover:border-brand-brinjal/50"
+                  className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 border border-white/20 hover:border-white/40"
                   aria-label={isPlaying ? "Pause" : "Play"}
                 >
                   {isPlaying ? (
-                    <Pause className="w-5 h-5 text-brand-brinjal" />
+                    <Pause className="w-5 h-5 text-white" />
                   ) : (
-                    <Play className="w-5 h-5 text-brand-brinjal" />
+                    <Play className="w-5 h-5 text-white" />
                   )}
                 </button>
 
@@ -295,10 +295,10 @@ const TimelineComponent = ({ data }: { data: TimelineEntry[] }) => {
                     setPreview(null);
                     setIsPlaying(false);
                   }}
-                  className="p-3 rounded-full bg-brand-brinjal/10 hover:bg-brand-brinjal/20 transition-all duration-300 border border-brand-brinjal/30 hover:border-brand-brinjal/50"
+                  className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 border border-white/20 hover:border-white/40"
                   aria-label="Close slideshow"
                 >
-                  <X className="w-5 h-5 text-brand-brinjal" />
+                  <X className="w-5 h-5 text-white" />
                 </button>
               </div>
             </div>
